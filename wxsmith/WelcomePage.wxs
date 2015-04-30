@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxPanel" name="WelcomePage">
+		<size>480,320</size>
+		<id_arg>0</id_arg>
+		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
+			<object class="sizeritem">
+				<object class="wxStaticBitmap" name="wxID_ANY" variable="StaticBitmap1" member="no">
+					<bitmap code="wxBitmap( Wizard_xpm)" />
+					<style>0</style>
+				</object>
+				<flag>wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>5</border>
+			</object>
+			<object class="sizeritem">
+				<object class="wxBoxSizer" variable="BoxSizer2" member="no">
+					<orient>wxVERTICAL</orient>
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="no">
+							<label>Welcome to the Inno Script&#x0A;Wizard</label>
+							<font>
+								<size>14</size>
+								<style>normal</style>
+								<weight>bold</weight>
+								<underlined>0</underlined>
+								<family>swiss</family>
+							</font>
+						</object>
+						<flag>wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="spacer">
+						<flag>wxLEFT|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+						<size>20,4</size>
+					</object>
+					<object class="sizeritem">
+						<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="no">
+							<label>This wizard will guide you through the process of creatubg a&#x0A;new Inno Setup script file. The results will be used to generate&#x0A;a new script file which can be compiled directly or saved on &#x0A;disk for later use.&#x0A;&#x0A;Not all features of Inno Setup are coverd by this wizard. See&#x0A;the documentation for details on creating Inno Setup script&#x0A;files.&#x0A;&#x0A;Click Next to continue, or Cancel to exit this wizard.</label>
+						</object>
+						<flag>wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+					<object class="spacer">
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+						<option>1</option>
+						<size>20,63</size>
+					</object>
+					<object class="sizeritem">
+						<object class="wxCheckBox" name="ID_CHECKBOX1" variable="chEmpty" member="yes">
+							<label>Create a new empty script file</label>
+							<handler function="OnchEmptyClick" entry="EVT_CHECKBOX" />
+						</object>
+						<flag>wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL</flag>
+						<border>5</border>
+					</object>
+				</object>
+				<flag>wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<border>5</border>
+			</object>
+		</object>
+	</object>
+</wxsmith>
