@@ -567,8 +567,8 @@ void CInno::WriteFile( wxString Name)
             actproj->AddFile( actproj->GetActiveBuildTarget(), Name + _T(".iss"), false, false);
             actproj->EndAddFiles();
             Manager::Get()->GetProjectManager()->GetUI().RebuildTree();
-            actproj->AddCommandsAfterBuild( _T("\"$(#inno)/ISCC\" \"") + Name + _T(".iss\""));
-            actproj->SetAlwaysRunPostBuildSteps( true);
+            //actproj->AddCommandsAfterBuild( _T("\"$(#inno)/ISCC\" \"") + Name + _T(".iss\""));
+            //actproj->SetAlwaysRunPostBuildSteps( true);
         }
     }
 }
@@ -611,8 +611,8 @@ void CInno::WriteEmptyFile( wxString Name)
             actproj->AddFile( actproj->GetActiveBuildTarget(), Name + _T(".iss"), false, false);
             actproj->EndAddFiles();
             Manager::Get()->GetProjectManager()->GetUI().RebuildTree();
-            actproj->AddCommandsAfterBuild( _T("\"$(#inno)/ISCC\" \"") + Name + _T(".iss\""));
-            actproj->SetAlwaysRunPostBuildSteps( true);
+            //actproj->AddCommandsAfterBuild( _T("\"$(#inno)/ISCC\" \"") + Name + _T(".iss\""));
+            //actproj->SetAlwaysRunPostBuildSteps( true);
         }
     }
 }
