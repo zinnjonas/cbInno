@@ -13,6 +13,12 @@
 				<Option host_application="$(#cb)/devel/codeblocks.exe" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
+					<Add option="-g" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-fexceptions" />
+					<Add option="-Winvalid-pch" />
 					<Add option="-DBUILDING_PLUGIN" />
 					<Add option="-DHAVE_W32API_H" />
 					<Add option="-D__WXMSW__" />
@@ -21,12 +27,6 @@
 					<Add option="-DCB_PRECOMP" />
 					<Add option="-DWX_PRECOMP" />
 					<Add option="-DwxUSE_UNICODE" />
-					<Add option="-pipe" />
-					<Add option="-mthreads" />
-					<Add option="-fmessage-length=0" />
-					<Add option="-fexceptions" />
-					<Add option="-Winvalid-pch" />
-					<Add option="-g" />
 					<Add directory="$(#cb)/include" />
 					<Add directory="$(#cb)/sdk/wxscintilla/include" />
 					<Add directory="$(#wx.include)" />
@@ -41,7 +41,9 @@
 				</Linker>
 				<ExtraCommands>
 					<Add after="zip -j9 Inno.zip manifest.xml" />
-					<Add after="zip -j9 Inno.cbplugin Inno.dll Inno.zip" />
+					<Add after="zip -j9 Inno.cbplugin Inno.dll Inno.zip Inno.png Inno-off.png" />
+					<Add after="zip -r Inno.cbplugin lexers/" />
+					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 		</Build>
@@ -50,10 +52,6 @@
 			<Add library="uuid" />
 			<Add library="rpcrt4" />
 		</Linker>
-		<ExtraCommands>
-			<Add after='&quot;$(#inno)/ISCC&quot; &quot;D:\Jonas\Documents\Programmierdatein\c++\Inno\Inno.iss&quot;' />
-			<Mode after="always" />
-		</ExtraCommands>
 		<Unit filename="ApplicationDocumentation.cpp" />
 		<Unit filename="ApplicationDocumentation.h" />
 		<Unit filename="ApplicationFiles.cpp" />
@@ -83,6 +81,9 @@
 		<Unit filename="Inno.cpp" />
 		<Unit filename="Inno.h" />
 		<Unit filename="Inno.iss" />
+		<Unit filename="InnoSettings.cpp" />
+		<Unit filename="InnoSettings.h" />
+		<Unit filename="InnoSettings.xrc" />
 		<Unit filename="Languages.cpp" />
 		<Unit filename="Languages.h" />
 		<Unit filename="Registry.cpp" />
@@ -114,6 +115,7 @@
 		<Unit filename="wxsmith/CompilerSettings.wxs" />
 		<Unit filename="wxsmith/CreateDialog.wxs" />
 		<Unit filename="wxsmith/FinishWizard.wxs" />
+		<Unit filename="wxsmith/InnoSettings.wxs" />
 		<Unit filename="wxsmith/SetupLanguages.wxs" />
 		<Unit filename="wxsmith/WelcomePage.wxs" />
 		<Unit filename="wxsmith/WizardFile.wxs" />

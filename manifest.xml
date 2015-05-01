@@ -11,4 +11,6 @@
         <Value thanksTo="" />
         <Value license="GPL" />
     </Plugin>
+    <Extra file="lexers/lexer_inno.sample" />
+    <Extra file="lexers/lexer_inno.xml" />
 </CodeBlocks_plugin_manifest_file>

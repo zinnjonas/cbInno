@@ -27,12 +27,12 @@ InnoSettings::~InnoSettings()
 
 wxString InnoSettings::GetTitle() const
 {
-    return "Inno Settings";
+    return L"Inno Settings";
 }
 
 wxString InnoSettings::GetBitmapBaseName() const
 {
-    return "Inno";
+    return L"Inno";
 }
 
 void InnoSettings::OnApply()
