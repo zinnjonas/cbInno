@@ -37,7 +37,7 @@ WizardFile::WizardFile(wxWindow* parent, File Data,wxWindowID id,const wxPoint& 
 	wxBoxSizer* BoxSizer3;
 	wxStaticText* StaticText4;
 
-	Create(parent, wxID_ANY, L"Inno Wizard");
+	Create(parent, id, _T("Inno Wizard"));
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
 	StaticBoxSizer1 = new wxStaticBoxSizer(wxVERTICAL, this, _("Source"));
 	text1 = new wxStaticText(this, ID_STATICTEXT1, _("Source file or folder:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));

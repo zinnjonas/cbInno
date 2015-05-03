@@ -2,6 +2,7 @@
 #define INNOSETTINGS_H
 
 //(*Headers(InnoSettings)
+#include <wx/filepicker.h>
 #include <wx/panel.h>
 //*)
 
@@ -23,6 +24,7 @@ class InnoSettings: public cbConfigurationPanel
 		virtual void OnCancel();
 
 		//(*Declarations(InnoSettings)
+		wxFilePickerCtrl* iscc_picker;
 		//*)
 
 	protected:

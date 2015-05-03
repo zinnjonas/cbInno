@@ -15,6 +15,7 @@ namespace
     const int ID_INNO_EMPTY = wxNewId();
     const int ID_INNO_NEW = wxNewId();
     const int ID_INNO_BUILD = wxNewId();
+    const int ID_INNO_THREAD = wxNewId();
 }
 
 
@@ -24,6 +25,7 @@ BEGIN_EVENT_TABLE(Inno, cbPlugin)
     EVT_MENU( ID_INNO_EMPTY, Inno::OnEmpty)
     EVT_MENU(ID_INNO_NEW, Inno::OnNew)
     EVT_MENU( ID_INNO_BUILD, Inno::OnInnoBuild)
+    EVT_END_PROCESS(ID_INNO_THREAD, Inno::OnProcessEnd)
 END_EVENT_TABLE()
 
 // constructor
@@ -43,6 +45,8 @@ Inno::~Inno()
 {
 }
 
+#include "Images/Inno.xpm"
+
 void Inno::OnAttach()
 {
     // do whatever initialization you need for your plugin
@@ -53,6 +57,15 @@ void Inno::OnAttach()
     // (see: does not need) this plugin...
     if( m_IsAttached)
     {
+        m_logger = new TextCtrlLogger();
+        m_log_pos = Manager::Get()->GetLogManager()->SetLog(m_logger);
+        Manager::Get()->GetLogManager()->Slot(m_log_pos).title = L"Inno";
+        wxBitmap* icon =new wxBitmap(Inno_xpm);
+        if( !icon->IsOk())
+            cbMessageBox(L"Schade");
+        CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_logger, Manager::Get()->GetLogManager()->Slot(m_log_pos).title, icon);
+        Manager::Get()->ProcessEvent(evt);
+
         AddFileMasksToProjectManager();
     }
 }
@@ -64,6 +77,7 @@ void Inno::OnRelease(bool appShutDown)
     // which means you must not use any of the SDK Managers
     // NOTE: after this function, the inherited member variable
     // m_IsAttached will be FALSE...
+    CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_logger);
 }
 
 void Inno::BuildMenu(wxMenuBar* menuBar)
@@ -89,6 +103,7 @@ void Inno::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeDa
         {
             if( data->GetProjectFile()->relativeFilename.AfterLast('.').compare(L"iss") == 0)
             {
+                iss_name = data->GetProjectFile()->file.GetFullPath() ;
                 menu->Append(ID_INNO_BUILD, L"Build");
             }
         }
@@ -182,11 +197,6 @@ bool Inno::IsGroupNameExisting(wxString sName, const FilesGroupsAndMasks *fm)
 
 void Inno::OnEmpty(wxCommandEvent &event)
 {
-    /*ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("gcv"));
-    if(!pCfg->Exists(_T("/sets/default/Inno/base")))
-    {
-        Manager::Get()->GetUserVariableManager()->Replace(_T("Inno"));
-    }*/
 
     CInno Inno;
     bool OverwriteFile = true;
@@ -216,11 +226,6 @@ void Inno::OnNew(wxCommandEvent &event)
 {
     CInno Inno;
     Inno.Create( Manager::Get()->GetAppWindow());
-    /*ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("gcv"));
-    if(!pCfg->Exists(_T("/sets/default/Inno/base")))
-    {
-        Manager::Get()->GetUserVariableManager()->Replace(_T("Inno"));
-    }*/
 
     wxString Name;
 
@@ -247,10 +252,9 @@ void Inno::OnNew(wxCommandEvent &event)
                 Inno.WriteFile(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.'));
                 if( wxYES == wxMessageBox( _T( "Do you want to compile the Inno Setup file?"), _T( "Inno Setup"), wxYES_NO | wxICON_QUESTION))
                 {
-                    //CCreateDialog* Create = new CCreateDialog( Manager::Get()->GetAppWindow());
-                    //Create->SetName( pCfg->Read(_T("/sets/default/inno/base")) + _T("\\ISCC\" /q ") +  Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.') + _T(".iss\""));
-                    //Create->ShowModal();
-                    //Create->Destroy();
+                    wxCommandEvent event;
+                    iss_name = Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.') + L".iss";
+                    OnInnoBuild(event);
                 }
             }
         }
@@ -265,5 +269,55 @@ void Inno::OnNew(wxCommandEvent &event)
 
 void Inno::OnInnoBuild(wxCommandEvent &event)
 {
-    cbMessageBox(L"Hallo");
+    ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("inno"));
+    wxString path = L"\"" + pCfg->Read(_T("iscc_path"), _T("")) + L"\"";
+    if( path.empty())
+    {
+        Manager::Get()->GetLogManager()->Log(L"please set the path to the inno compiler first!\nSettings->Environment...->Inno");
+        return;
+    }
+
+    wxString command = path + L" \"";
+
+    command += iss_name;
+
+    command += L"\"";
+
+    cbMessageBox(command);
+    wxProcess* compile = new wxProcess(this, ID_INNO_THREAD);
+    compile->Redirect();
+    long pid = wxExecute(command, wxEXEC_ASYNC, compile);
+    if( !compile)
+    {
+        cbMessageBox(L"can't open a process to the iscc");
+        return;
+    }
+
+    m_out = compile->GetInputStream();
+    m_err = compile->GetErrorStream();
+    if( !m_out || !m_err)
+    {
+        cbMessageBox(L"can't read from stdout of iscc");
+        return;
+    }
+
+    Manager::Get()->GetLogManager()->Log(wxString::Format(L"iscc build started with pid: %d", pid));
+
+}
+
+void Inno::OnProcessEnd( wxProcessEvent& evt)
+{
+    Manager::Get()->GetLogManager()->Log(L"finished");
+    wxString text;
+    while( m_out->CanRead())
+    {
+        text += m_out->GetC();
+    }
+    Manager::Get()->GetLogManager()->Log(text);
+    wxString error;
+    while( m_err->CanRead())
+    {
+        error += m_err->GetC();
+    }
+    /*Manager::Get()->GetLogManager()->Log(L"Test", Manager::Get()->GetLogManager()->FindIndex(Manager::Get()->GetLogManager()->New(L"Build log")));*/
 }

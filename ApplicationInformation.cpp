@@ -13,7 +13,6 @@
 //(*IdInit(ApplicationInformation)
 const long ApplicationInformation::ID_STATICTEXT2 = wxNewId();
 const long ApplicationInformation::ID_STATICTEXT1 = wxNewId();
-const long ApplicationInformation::ID_STATICBITMAP1 = wxNewId();
 const long ApplicationInformation::ID_PANEL1 = wxNewId();
 const long ApplicationInformation::ID_STATICLINE1 = wxNewId();
 const long ApplicationInformation::ID_STATICTEXT6 = wxNewId();
@@ -85,7 +84,7 @@ ApplicationInformation::ApplicationInformation(wxWizard* parent, wxWizardPageSim
 	BoxSizer4->Add(BoxSizer5, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer3->Add(BoxSizer4, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer3->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticBitmap1 = new wxStaticBitmap(Panel1, ID_STATICBITMAP1, wxBitmap(wxImage(_T("C:\\Users\\Pestratte\\Documents\\Programmierdatein\\wx\\InnoTest\\LinksOben.bmp"))), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(Panel1, wxID_ANY, wxBitmap(LinksOben_xpm), wxDefaultPosition, wxDefaultSize, 0, _T("wxID_ANY"));
 	BoxSizer3->Add(StaticBitmap1, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	Panel1->SetSizer(BoxSizer3);
 	BoxSizer3->Fit(Panel1);

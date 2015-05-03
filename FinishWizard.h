@@ -23,7 +23,6 @@ class FinishWizard: public wxWizardPageSimple
 	protected:
 
 		//(*Identifiers(FinishWizard)
-		static const long ID_STATICBITMAP1;
 		static const long ID_STATICTEXT1;
 		//*)
 

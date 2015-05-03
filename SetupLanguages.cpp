@@ -12,7 +12,6 @@
 //(*IdInit(SetupLanguages)
 const long SetupLanguages::ID_STATICTEXT2 = wxNewId();
 const long SetupLanguages::ID_STATICTEXT1 = wxNewId();
-const long SetupLanguages::ID_STATICBITMAP1 = wxNewId();
 const long SetupLanguages::ID_PANEL1 = wxNewId();
 const long SetupLanguages::ID_STATICLINE1 = wxNewId();
 const long SetupLanguages::ID_STATICTEXT3 = wxNewId();
@@ -47,7 +46,7 @@ SetupLanguages::SetupLanguages(wxWizard* parent, wxWizardPageSimple* prev, wxWiz
 	wxBoxSizer* BoxSizer1;
 	wxBoxSizer* BoxSizer3;
 
-	Create(parent, prev);
+	Create(parent, prev, next);
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
 	Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
 	Panel1->SetBackgroundColour( wxColour( 255, 255, 255));
@@ -67,7 +66,7 @@ SetupLanguages::SetupLanguages(wxWizard* parent, wxWizardPageSimple* prev, wxWiz
 	BoxSizer5->Add(BoxSizer7, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer4->Add(BoxSizer5, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer4->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticBitmap1 = new wxStaticBitmap(Panel1, ID_STATICBITMAP1, wxBitmap( LinksOben_xpm), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(Panel1, wxID_ANY, wxBitmap( LinksOben_xpm), wxDefaultPosition, wxDefaultSize, 0, _T("wxID_ANY"));
 	BoxSizer4->Add(StaticBitmap1, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	Panel1->SetSizer(BoxSizer4);
 	BoxSizer4->Fit(Panel1);

@@ -57,7 +57,7 @@ CompilerSettings::CompilerSettings(wxWizard* parent, wxWizardPageSimple* prev, w
 	wxBoxSizer* BoxSizer3;
 	wxStaticText* StaticText4;
 
-	Create(parent, prev);
+	Create(parent, prev, next);
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
 	Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
 	Panel1->SetBackgroundColour( wxColour( 255, 255, 255));

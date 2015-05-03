@@ -38,7 +38,6 @@ class ApplicationDocumentation: public wxWizardPageSimple
 		//(*Identifiers(ApplicationDocumentation)
 		static const long ID_STATICTEXT2;
 		static const long ID_STATICTEXT1;
-		static const long ID_STATICBITMAP1;
 		static const long ID_PANEL1;
 		static const long ID_STATICLINE1;
 		static const long ID_STATICTEXT3;

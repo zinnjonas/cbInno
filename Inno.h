@@ -18,6 +18,7 @@
 #endif
 
 #include <cbplugin.h> // for "class cbPlugin"
+#include <loggers.h>
 
 class Inno : public cbPlugin
 {
@@ -67,6 +68,8 @@ class Inno : public cbPlugin
 
         void AddFileMasksToProjectManager(void);
         bool IsGroupNameExisting(wxString sName, const FilesGroupsAndMasks *fm);
+
+        void OnProcessEnd( wxProcessEvent& evt);
     protected:
         /** Any descendent plugin should override this virtual method and
           * perform any necessary initialization. This method is called by
@@ -96,6 +99,12 @@ class Inno : public cbPlugin
         void OnEmpty( wxCommandEvent &event);
         void OnNew(wxCommandEvent &event);
         void OnInnoBuild(wxCommandEvent &event);
+
+        wxString iss_name;
+        wxInputStream* m_out;
+        wxInputStream* m_err;
+        TextCtrlLogger* m_logger;
+        int m_log_pos;
 
         DECLARE_EVENT_TABLE();
 };

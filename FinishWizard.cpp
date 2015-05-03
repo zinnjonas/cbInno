@@ -8,7 +8,6 @@
 //*)
 
 //(*IdInit(FinishWizard)
-const long FinishWizard::ID_STATICBITMAP1 = wxNewId();
 const long FinishWizard::ID_STATICTEXT1 = wxNewId();
 //*)
 
@@ -27,10 +26,10 @@ FinishWizard::FinishWizard(wxWizard* parent, wxWizardPageSimple* prev, wxWizardP
 	wxBoxSizer* BoxSizer2;
 	wxBoxSizer* BoxSizer1;
 
-	Create(parent,prev, next);
+	Create(parent, prev, next);
 	SetBackgroundColour( wxColour( 255, 255, 255));
 	BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
-	StaticBitmap1 = new wxStaticBitmap(this, ID_STATICBITMAP1, wxBitmap(wxImage(_T("C:\\Users\\Pestratte\\Documents\\Programmierdatein\\wx\\InnoTest\\Wizard.bmp"))), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICBITMAP1"));
+	StaticBitmap1 = new wxStaticBitmap(this, wxID_ANY, wxBitmap(Wizard_xpm), wxDefaultPosition, wxDefaultSize, 0, _T("wxID_ANY"));
 	BoxSizer1->Add(StaticBitmap1, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("\nYou have successfully completed the Inno Setup Script\nWizard.\n\nTo close wizard and generate the new script file, click\nFinish."), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
