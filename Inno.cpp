@@ -78,6 +78,7 @@ void Inno::OnRelease(bool appShutDown)
     // NOTE: after this function, the inherited member variable
     // m_IsAttached will be FALSE...
     CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_logger);
+    Manager::Get()->ProcessEvent(evt);
 }
 
 void Inno::BuildMenu(wxMenuBar* menuBar)
