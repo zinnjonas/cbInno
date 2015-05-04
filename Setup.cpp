@@ -875,6 +875,7 @@ void CSetup::SetAppId( )
     memset (&guid, '\0', sizeof (guid)) ;
     if (CoCreateGuid (&guid) == S_OK)
     {
+
         if (UuidToStringA(&guid, &pszUuid) == RPC_S_OK)
         {
             wchar_t GuidString[37];

@@ -40,8 +40,10 @@
 					<Add directory="$(#wx.lib)/gcc_dll64" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Inno.zip manifest.xml" />
-					<Add after="zip -j9 Inno.cbplugin Inno.dll Inno.zip" />
+					<Add after="zip -j9 Inno.zip manifest.xml InnoSettings.xrc" />
+					<Add after="zip -j9 Inno.cbplugin Inno.dll Inno.zip Inno.png Inno-off.png" />
+					<Add after="zip -r Inno.cbplugin lexers/" />
+					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 		</Build>
@@ -74,6 +76,7 @@
 		<Unit filename="FinishWizard.h" />
 		<Unit filename="Icons.cpp" />
 		<Unit filename="Icons.h" />
+		<Unit filename="Images/Inno.xpm" />
 		<Unit filename="Images/LinksOben.xpm" />
 		<Unit filename="Images/Wizard.xpm" />
 		<Unit filename="Inno.cpp" />

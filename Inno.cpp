@@ -274,19 +274,21 @@ void Inno::OnNew(wxCommandEvent &event)
 void Inno::OnInnoBuild(wxCommandEvent &event)
 {
     ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("inno"));
-    wxString path = L"\"" + pCfg->Read(_T("iscc_path"), _T("")) + L"\"";
+    wxString path = pCfg->Read(_T("iscc_path"), _T(""));
     if( path.empty())
     {
         Manager::Get()->GetLogManager()->Log(L"please set the path to the inno compiler first!\nSettings->Environment...->Inno");
         return;
     }
 
+    path = L"\"" + path + L"\"";
+
     wxString command = path + L" \"";
 
     command += iss_name;
 
     command += L"\"";
-
+    m_running = true;
     wxProcess* compile = new wxProcess(this, ID_INNO_THREAD);
     compile->Redirect();
     long pid = wxExecute(command, wxEXEC_ASYNC, compile);
@@ -304,7 +306,21 @@ void Inno::OnInnoBuild(wxCommandEvent &event)
         return;
     }
 
-    Manager::Get()->GetLogManager()->Log(wxString::Format(L"iscc build started with pid: %d", pid));
+    CodeBlocksLogEvent evt(cbEVT_SWITCH_TO_LOG_WINDOW, m_logger);
+    Manager::Get()->ProcessEvent(evt);
+
+    m_logger->Append(wxString::Format(L"iscc build started with pid: %d", pid));
+
+    while( m_running)
+    {
+        wxString text;
+        while( m_out->CanRead())
+        {
+            text += m_out->GetC();
+        }
+        m_logger->Append(text);
+        m_logger->Append(L"Jonas",Logger::warning);
+    }
 
 }
 
@@ -313,6 +329,7 @@ void Inno::OnProcessEnd( wxProcessEvent& evt)
 
     CodeBlocksLogEvent event(cbEVT_SWITCH_TO_LOG_WINDOW, m_logger);
     Manager::Get()->ProcessEvent(event);
+    m_running = false;
 
     wxString text;
     while( m_out->CanRead())

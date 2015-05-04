@@ -105,6 +105,7 @@ class Inno : public cbPlugin
         wxInputStream* m_err;
         TextCtrlLogger* m_logger;
         int m_log_pos;
+        bool m_running;
 
         DECLARE_EVENT_TABLE();
 };
