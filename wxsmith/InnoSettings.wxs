@@ -2,6 +2,6 @@
 <wxsmith>
 	<resource_extra>
 		<object root="1" />
-		<object name="ID_FILEPICKERCTRL1" class="wxFilePickerCtrl" variable="iscc_picker" member="yes" />
+		<object name="ID_ISCC_PICKER" class="wxFilePickerCtrl" variable="FilePickerCtrl1" member="yes" />
 	</resource_extra>
 </wxsmith>

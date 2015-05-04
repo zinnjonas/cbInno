@@ -15,17 +15,14 @@ class InnoSettings: public cbConfigurationPanel
 		InnoSettings(wxWindow* parent);
 		virtual ~InnoSettings();
 
-		virtual wxString GetTitle() const;
-
-		virtual wxString GetBitmapBaseName() const;
-
-		virtual void OnApply();
-
-		virtual void OnCancel();
-
 		//(*Declarations(InnoSettings)
-		wxFilePickerCtrl* iscc_picker;
+		wxFilePickerCtrl* FilePickerCtrl1;
 		//*)
+
+		virtual wxString GetTitle() const;
+		virtual wxString GetBitmapBaseName() const;
+		virtual void OnApply();
+		virtual void OnCancel();
 
 	protected:
 

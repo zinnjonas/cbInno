@@ -1,13 +1,13 @@
 #include "InnoSettings.h"
 
-#include <configmanager.h>
-
 //(*InternalHeaders(InnoSettings)
 #include <wx/xrc/xmlres.h>
 //*)
 
 //(*IdInit(InnoSettings)
 //*)
+
+#include <configmanager.h>
 
 BEGIN_EVENT_TABLE(InnoSettings,wxPanel)
 	//(*EventTable(InnoSettings)
@@ -18,10 +18,10 @@ InnoSettings::InnoSettings(wxWindow* parent)
 {
 	//(*Initialize(InnoSettings)
 	wxXmlResource::Get()->LoadObject(this,parent,_T("InnoSettings"),_T("wxPanel"));
-	iscc_picker = (wxFilePickerCtrl*)FindWindow(XRCID("ID_FILEPICKERCTRL1"));
+	FilePickerCtrl1 = (wxFilePickerCtrl*)FindWindow(XRCID("ID_ISCC_PICKER"));
 	//*)
 	ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("inno"));
-    XRCCTRL(*this, "ID_FILEPICKERCTRL1", wxFilePickerCtrl)->SetPath(pCfg->Read(_T("iscc_path"), _T("")));
+    XRCCTRL(*this, "ID_ISCC_PICKER", wxFilePickerCtrl)->SetPath(pCfg->Read(_T("iscc_path"), _T("")));
 }
 
 InnoSettings::~InnoSettings()
@@ -43,10 +43,11 @@ wxString InnoSettings::GetBitmapBaseName() const
 void InnoSettings::OnApply()
 {
     ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("inno"));
-    pCfg->Write(_T("iscc_path"), XRCCTRL(*this, "ID_FILEPICKERCTRL1", wxFilePickerCtrl)->GetPath());
+    pCfg->Write(_T("iscc_path"), XRCCTRL(*this, "ID_ISCC_PICKER", wxFilePickerCtrl)->GetPath());
 }
 
 void InnoSettings::OnCancel()
 {
 
 }
+

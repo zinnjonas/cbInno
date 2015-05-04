@@ -40,7 +40,7 @@
 					<Add directory="$(#wx.lib)/gcc_dll" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="zip -j9 Inno.zip manifest.xml Inno.xrc" />
+					<Add after="zip -j9 Inno.zip manifest.xml InnoSettings.xrc" />
 					<Add after="zip -j9 Inno.cbplugin Inno.dll Inno.zip Inno.png Inno-off.png" />
 					<Add after="zip -r Inno.cbplugin lexers/" />
 					<Mode after="always" />
@@ -82,7 +82,6 @@
 		<Unit filename="Inno.cpp" />
 		<Unit filename="Inno.h" />
 		<Unit filename="Inno.iss" />
-		<Unit filename="Inno.xrc" />
 		<Unit filename="InnoSettings.cpp" />
 		<Unit filename="InnoSettings.h" />
 		<Unit filename="Languages.cpp" />
