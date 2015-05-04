@@ -318,8 +318,10 @@ void Inno::OnInnoBuild(wxCommandEvent &event)
         {
             text += m_out->GetC();
         }
-        m_logger->Append(text);
-        m_logger->Append(L"Jonas",Logger::warning);
+        if( !text.empty())
+            m_logger->Append(text);
+        else
+            break;
     }
 
 }
