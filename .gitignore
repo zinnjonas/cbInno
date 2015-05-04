@@ -26,3 +26,11 @@
 *.exe
 *.out
 *.app
+
+# binary generated files
+*.zip
+
+# codeblock generated files
+*.cbplugin
+*.depend
+*.layout
