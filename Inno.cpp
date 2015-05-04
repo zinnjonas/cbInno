@@ -60,10 +60,7 @@ void Inno::OnAttach()
         m_logger = new TextCtrlLogger();
         m_log_pos = Manager::Get()->GetLogManager()->SetLog(m_logger);
         Manager::Get()->GetLogManager()->Slot(m_log_pos).title = L"Inno";
-        wxBitmap* icon =new wxBitmap(Inno_xpm);
-        if( !icon->IsOk())
-            cbMessageBox(L"Schade");
-        CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_logger, Manager::Get()->GetLogManager()->Slot(m_log_pos).title, icon);
+        CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_logger, Manager::Get()->GetLogManager()->Slot(m_log_pos).title, new wxBitmap(Inno_xpm));
         Manager::Get()->ProcessEvent(evt);
 
         AddFileMasksToProjectManager();
@@ -250,11 +247,17 @@ void Inno::OnNew(wxCommandEvent &event)
 
             if( Inno.ShowStandartWizard())
             {
-                Inno.WriteFile(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.'));
+                wxString file_name = Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.');
+                Inno.WriteFile(file_name);
+                iss_name = file_name + L".iss";
+
+                cbEditor* ed = Manager::Get()->GetEditorManager()->Open(iss_name);
+                ed->Reload();
+                ed->Activate();
+
                 if( wxYES == wxMessageBox( _T( "Do you want to compile the Inno Setup file?"), _T( "Inno Setup"), wxYES_NO | wxICON_QUESTION))
                 {
                     wxCommandEvent event;
-                    iss_name = Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.') + L".iss";
                     OnInnoBuild(event);
                 }
             }
@@ -284,7 +287,6 @@ void Inno::OnInnoBuild(wxCommandEvent &event)
 
     command += L"\"";
 
-    cbMessageBox(command);
     wxProcess* compile = new wxProcess(this, ID_INNO_THREAD);
     compile->Redirect();
     long pid = wxExecute(command, wxEXEC_ASYNC, compile);
@@ -308,17 +310,57 @@ void Inno::OnInnoBuild(wxCommandEvent &event)
 
 void Inno::OnProcessEnd( wxProcessEvent& evt)
 {
-    Manager::Get()->GetLogManager()->Log(L"finished");
+
+    CodeBlocksLogEvent event(cbEVT_SWITCH_TO_LOG_WINDOW, m_logger);
+    Manager::Get()->ProcessEvent(event);
+
     wxString text;
     while( m_out->CanRead())
     {
         text += m_out->GetC();
     }
-    Manager::Get()->GetLogManager()->Log(text);
-    wxString error;
+    m_logger->Append(text);
+    wxString err;
     while( m_err->CanRead())
     {
-        error += m_err->GetC();
+        err += m_err->GetC();
     }
-    /*Manager::Get()->GetLogManager()->Log(L"Test", Manager::Get()->GetLogManager()->FindIndex(Manager::Get()->GetLogManager()->New(L"Build log")));*/
+    if( !err.empty())
+    {
+
+        size_t pos = err.find(L": ");
+        size_t spos = err.find(L"in ");
+        wxString file = err.substr(spos+3, pos-spos-3);
+        wxString msg = err.substr(pos+2, err.find(L"Compile aborted.")-pos-2);
+        spos = err.find(L"on line");
+        int linenr = -1;
+        if( spos != wxString::npos)
+        {
+            wxString line = err.substr(spos+8, err.find(' ', spos+8)-spos-8);
+            linenr = wxAtoi(line);
+        }
+
+        pos = msg.find('[');
+        if( pos != wxString::npos)
+        {
+            pos++;
+            wxString section = msg.substr(pos, msg.find(']') - pos);
+        }
+
+
+        cbEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
+        ed->Reload();
+        ed->Activate();
+        if( linenr != -1)
+        {
+            ed->GotoLine(linenr-1);
+            ed->SetErrorLine(linenr-1);
+        }
+        m_logger->Append(err, Logger::error);
+
+    }
+    else
+    {
+        Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor()->Activate();
+    }
 }
