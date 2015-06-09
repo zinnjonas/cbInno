@@ -16,50 +16,50 @@
 
 class ApplicationFolder: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		ApplicationFolder(wxWizard* parent, wxWizardPageSimple* prev = NULL, wxWizardPageSimple* next = NULL);
-		virtual ~ApplicationFolder();
+    ApplicationFolder(wxWizard* parent, wxWizardPageSimple* prev = NULL, wxWizardPageSimple* next = NULL);
+    virtual ~ApplicationFolder();
 
-		//(*Declarations(ApplicationFolder)
-		wxChoice* chProgrammFolder;
-		wxTextCtrl* txtAppFolderName;
-		wxTextCtrl* txtCustom;
-		wxStaticText* text1;
-		wxPanel* Panel1;
-		wxCheckBox* cbAppFolderName;
-		wxCheckBox* cbDoesntFolder;
-		wxStaticText* text2;
-		wxStaticLine* StaticLine1;
-		//*)
+    //(*Declarations(ApplicationFolder)
+    wxChoice* chProgrammFolder;
+    wxTextCtrl* txtAppFolderName;
+    wxTextCtrl* txtCustom;
+    wxStaticText* text1;
+    wxPanel* Panel1;
+    wxCheckBox* cbAppFolderName;
+    wxCheckBox* cbDoesntFolder;
+    wxStaticText* text2;
+    wxStaticLine* StaticLine1;
+    //*)
 
-	protected:
+  protected:
 
-		//(*Identifiers(ApplicationFolder)
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT1;
-		static const long ID_PANEL1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT3;
-		static const long ID_CHOICE1;
-		static const long ID_TEXTCTRL1;
-		static const long ID_STATICTEXT4;
-		static const long ID_TEXTCTRL2;
-		static const long ID_CHECKBOX1;
-		static const long ID_STATICTEXT5;
-		static const long ID_CHECKBOX2;
-		static const long ID_STATICTEXT7;
-		static const long ID_STATICTEXT8;
-		//*)
+    //(*Identifiers(ApplicationFolder)
+    static const long ID_STATICTEXT2;
+    static const long ID_STATICTEXT1;
+    static const long ID_PANEL1;
+    static const long ID_STATICLINE1;
+    static const long ID_STATICTEXT3;
+    static const long ID_CHOICE1;
+    static const long ID_TEXTCTRL1;
+    static const long ID_STATICTEXT4;
+    static const long ID_TEXTCTRL2;
+    static const long ID_CHECKBOX1;
+    static const long ID_STATICTEXT5;
+    static const long ID_CHECKBOX2;
+    static const long ID_STATICTEXT7;
+    static const long ID_STATICTEXT8;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(ApplicationFolder)
-		void OnchProgrammFolderSelect(wxCommandEvent& event);
-		void OncbDoesntFolderClick(wxCommandEvent& event);
-		//*)
+    //(*Handlers(ApplicationFolder)
+    void OnchProgrammFolderSelect(wxCommandEvent& event);
+    void OncbDoesntFolderClick(wxCommandEvent& event);
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

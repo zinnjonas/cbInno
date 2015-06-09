@@ -11,35 +11,35 @@
 
 class CCreateDialog: public wxDialog
 {
-	public:
+  public:
 
-		CCreateDialog(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
-		virtual ~CCreateDialog();
+    CCreateDialog(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
+    virtual ~CCreateDialog();
 
-        void SetName( wxString Name);
+    void SetName( wxString Name);
 
-		//(*Declarations(CreateDialog)
-		wxStaticText* StaticText1;
-		wxButton* btnOK;
-		wxTextCtrl* TextCtrl1;
-		//*)
+    //(*Declarations(CreateDialog)
+    wxStaticText* StaticText1;
+    wxButton* btnOK;
+    wxTextCtrl* TextCtrl1;
+    //*)
 
-	protected:
+  protected:
 
-		//(*Identifiers(CreateDialog)
-		static const long ID_STATICTEXT1;
-		static const long ID_TEXTCTRL1;
-		static const long ID_BUTTON1;
-		//*)
+    //(*Identifiers(CreateDialog)
+    static const long ID_STATICTEXT1;
+    static const long ID_TEXTCTRL1;
+    static const long ID_BUTTON1;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(CreateDialog)
-		void OnbtnOKClick(wxCommandEvent& event);
-		//*)
-		wxArrayString m_output;
+    //(*Handlers(CreateDialog)
+    void OnbtnOKClick(wxCommandEvent& event);
+    //*)
+    wxArrayString m_output;
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

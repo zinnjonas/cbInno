@@ -12,30 +12,30 @@
 
 class FinishWizard: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		FinishWizard(wxWizard* parent, wxWizardPageSimple* prev, wxWizardPageSimple* next);
-		virtual ~FinishWizard();
+    FinishWizard(wxWizard* parent, wxWizardPageSimple* prev, wxWizardPageSimple* next);
+    virtual ~FinishWizard();
 
-		//(*Declarations(FinishWizard)
-		//*)
+    //(*Declarations(FinishWizard)
+    //*)
 
-	protected:
+  protected:
 
-		//(*Identifiers(FinishWizard)
-		static const long ID_STATICTEXT1;
-		//*)
+    //(*Identifiers(FinishWizard)
+    static const long ID_STATICTEXT1;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(FinishWizard)
-		void OnEraseBackground(wxEraseEvent& event);
-		//*)
+    //(*Handlers(FinishWizard)
+    void OnEraseBackground(wxEraseEvent& event);
+    //*)
 
-        wxWizardPage* m_First;
-        wxWizardPage* m_Normal;
+    wxWizardPage* m_First;
+    wxWizardPage* m_Normal;
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

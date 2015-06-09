@@ -10,31 +10,31 @@
 
 class InnoSettings: public cbConfigurationPanel
 {
-	public:
+  public:
 
-		InnoSettings(wxWindow* parent);
-		virtual ~InnoSettings();
+    InnoSettings(wxWindow* parent);
+    virtual ~InnoSettings();
 
-		//(*Declarations(InnoSettings)
-		wxFilePickerCtrl* FilePickerCtrl1;
-		//*)
+    //(*Declarations(InnoSettings)
+    wxFilePickerCtrl* FilePickerCtrl1;
+    //*)
 
-		virtual wxString GetTitle() const;
-		virtual wxString GetBitmapBaseName() const;
-		virtual void OnApply();
-		virtual void OnCancel();
+    virtual wxString GetTitle() const;
+    virtual wxString GetBitmapBaseName() const;
+    virtual void OnApply();
+    virtual void OnCancel();
 
-	protected:
+  protected:
 
-		//(*Identifiers(InnoSettings)
-		//*)
+    //(*Identifiers(InnoSettings)
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(InnoSettings)
-		//*)
+    //(*Handlers(InnoSettings)
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

@@ -13,37 +13,37 @@
 
 class WelcomePage: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		WelcomePage(wxWizard* parent);
-		virtual ~WelcomePage();
+    WelcomePage(wxWizard* parent);
+    virtual ~WelcomePage();
 
-		//(*Declarations(WelcomePage)
-		wxCheckBox* chEmpty;
-		//*)
+    //(*Declarations(WelcomePage)
+    wxCheckBox* chEmpty;
+    //*)
 
-		bool GetIsEmptySet( void);
+    bool GetIsEmptySet( void);
 
-	protected:
+  protected:
 
-		//(*Identifiers(WelcomePage)
-		static const long ID_STATICTEXT1;
-		static const long ID_STATICTEXT2;
-		static const long ID_CHECKBOX1;
-		//*)
+    //(*Identifiers(WelcomePage)
+    static const long ID_STATICTEXT1;
+    static const long ID_STATICTEXT2;
+    static const long ID_CHECKBOX1;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(WelcomePage)
-		void OnchEmptyClick(wxCommandEvent& event);
-		//*)
+    //(*Handlers(WelcomePage)
+    void OnchEmptyClick(wxCommandEvent& event);
+    //*)
 
-        bool m_Empty;
+    bool m_Empty;
 
-        wxWizardPage* m_Last;
-        wxWizardPage* m_Normal;
+    wxWizardPage* m_Last;
+    wxWizardPage* m_Normal;
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

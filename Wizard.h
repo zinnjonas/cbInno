@@ -43,86 +43,86 @@ WX_DECLARE_OBJARRAY(CTypes,         ArraySetupType);
 
 struct CInnoFile
 {
-    CSetup              Setup;
-    ArraySetupFile      Files;
-    ArraySetupLanguage  Languages;
-    ArraySetupTask      Tasks;
-    ArraySetupIcon      Icons;
-    ArraySetupRun       Runs;
-    ArraySetupRegistry  Registrys;
-    ArraySetupUninstall UninstallDeletes;
-    ArraySetupComponent Components;
-    ArraySetupCustom    CustomMessages;
-    ArraySetupType      Types;
+  CSetup              Setup;
+  ArraySetupFile      Files;
+  ArraySetupLanguage  Languages;
+  ArraySetupTask      Tasks;
+  ArraySetupIcon      Icons;
+  ArraySetupRun       Runs;
+  ArraySetupRegistry  Registrys;
+  ArraySetupUninstall UninstallDeletes;
+  ArraySetupComponent Components;
+  ArraySetupCustom    CustomMessages;
+  ArraySetupType      Types;
 };
 
 class MyStandartWizard : public wxWizard
 {
 
-    public:
+  public:
 
-        MyStandartWizard( wxWindow* parent);
+    MyStandartWizard( wxWindow* parent);
 
-        void SetName( wxString Name);
+    void SetName( wxString Name);
 
-        bool Show( void);
+    bool Show( void);
 
-        void WriteInFile( wxTextFile* File);
+    void WriteInFile( wxTextFile* File);
 
-        CInnoFile InnoFile;
+    CInnoFile InnoFile;
 
-        bool EmptyProjekt;
+    bool EmptyProjekt;
 
-    protected:
+  protected:
 
-        static const long ID_WIZARD;
+    static const long ID_WIZARD;
 
-        void OnWizardCancel(wxWizardEvent& event);
-        void InWizardChanging( wxWizardEvent& event);
-        void OnWizardFinish( wxWizardEvent& event);
+    void OnWizardCancel(wxWizardEvent& event);
+    void InWizardChanging( wxWizardEvent& event);
+    void OnWizardFinish( wxWizardEvent& event);
 
-    private:
+  private:
 
 
-        WelcomePage             *Page1;
-        ApplicationInformation  *Page2;
-        ApplicationFolder       *Page3;
-        ApplicationFiles        *Page4;
-        ApplicationIcons        *Page5;
-        ApplicationDocumentation*Page6;
-        SetupLanguages          *Page7;
-        CompilerSettings        *Page8;
-        FinishWizard            *Page9;
+    WelcomePage             *Page1;
+    ApplicationInformation  *Page2;
+    ApplicationFolder       *Page3;
+    ApplicationFiles        *Page4;
+    ApplicationIcons        *Page5;
+    ApplicationDocumentation*Page6;
+    SetupLanguages          *Page7;
+    CompilerSettings        *Page8;
+    FinishWizard            *Page9;
 
-        wxString                m_Name;
+    wxString                m_Name;
 
-        DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 
 class CInno
 {
-    public:
-        CInno( void);
-        virtual ~CInno();
+  public:
+    CInno( void);
+    virtual ~CInno();
 
-        void Create( wxWindow* parent);
-        void Set( wxString ProjectName);
-        void AddToProject( bool add);
+    void Create( wxWindow* parent);
+    void Set( wxString ProjectName);
+    void AddToProject( bool add);
 
-        void WriteFile( wxString Name = _("Test"));
-        void WriteEmptyFile( wxString Name = _("Test"));
+    void WriteFile( wxString Name = _("Test"));
+    void WriteEmptyFile( wxString Name = _("Test"));
 
-        bool ShowStandartWizard( void);
-        bool FileExist( wxString Name);
+    bool ShowStandartWizard( void);
+    bool FileExist( wxString Name);
 
-        void Delete( void);
+    void Delete( void);
 
-    private:
+  private:
 
-        bool     m_AddToProject;
+    bool     m_AddToProject;
 
-        MyStandartWizard *Wizard;
+    MyStandartWizard *Wizard;
 
 };
 

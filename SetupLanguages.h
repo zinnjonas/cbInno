@@ -15,44 +15,44 @@
 
 class SetupLanguages: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		SetupLanguages(wxWizard* parent, wxWizardPageSimple* prev, wxWizardPageSimple* next);
-		virtual ~SetupLanguages();
+    SetupLanguages(wxWizard* parent, wxWizardPageSimple* prev, wxWizardPageSimple* next);
+    virtual ~SetupLanguages();
 
-		bool IsChecked( void);
+    bool IsChecked( void);
 
-		//(*Declarations(SetupLanguages)
-		wxCheckListBox* lbLanguages;
-		wxPanel* Panel1;
-		wxButton* btnNone;
-		wxStaticLine* StaticLine1;
-		wxButton* btnAll;
-		//*)
+    //(*Declarations(SetupLanguages)
+    wxCheckListBox* lbLanguages;
+    wxPanel* Panel1;
+    wxButton* btnNone;
+    wxStaticLine* StaticLine1;
+    wxButton* btnAll;
+    //*)
 
-	protected:
+  protected:
 
-		//(*Identifiers(SetupLanguages)
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT1;
-		static const long ID_PANEL1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT3;
-		static const long ID_CHECKLISTBOX1;
-		static const long ID_BUTTON1;
-		static const long ID_BUTTON2;
-		static const long ID_STATICTEXT7;
-		static const long ID_STATICTEXT8;
-		//*)
+    //(*Identifiers(SetupLanguages)
+    static const long ID_STATICTEXT2;
+    static const long ID_STATICTEXT1;
+    static const long ID_PANEL1;
+    static const long ID_STATICLINE1;
+    static const long ID_STATICTEXT3;
+    static const long ID_CHECKLISTBOX1;
+    static const long ID_BUTTON1;
+    static const long ID_BUTTON2;
+    static const long ID_STATICTEXT7;
+    static const long ID_STATICTEXT8;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(SetupLanguages)
-		void OnbtnAllClick(wxCommandEvent& event);
-		void OnbtnNoneClick(wxCommandEvent& event);
-		//*)
+    //(*Handlers(SetupLanguages)
+    void OnbtnAllClick(wxCommandEvent& event);
+    void OnbtnNoneClick(wxCommandEvent& event);
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

@@ -2,32 +2,32 @@
 
 CUninstallDelte::CUninstallDelte( void)
 {
-    //ctor
+  //ctor
 }
 
 CUninstallDelte::~CUninstallDelte()
 {
-    //dtor
+  //dtor
 }
 
 void CUninstallDelte::WriteInFile( wxTextFile* File)
 {
-    if( !m_Type.IsEmpty() && !m_Name.IsEmpty())
-    {
-        wxString Text;
+  if( !m_Type.IsEmpty() && !m_Name.IsEmpty())
+  {
+    wxString Text;
 
-        Text = _T("Type: ") + m_Type + _T("; Name: \"") + m_Name +_T("\"");
+    Text = _T("Type: ") + m_Type + _T("; Name: \"") + m_Name +_T("\"");
 
-        File->AddLine( Text);
-    }
+    File->AddLine( Text);
+  }
 }
 
 void CUninstallDelte::SetType(wxString val)
 {
-    m_Type = val;
+  m_Type = val;
 }
 
 void CUninstallDelte::SetName(wxString val)
 {
-    m_Name = val;
+  m_Name = val;
 }

@@ -15,51 +15,51 @@
 
 class ApplicationIcons: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		ApplicationIcons(wxWizard* parent, wxWizardPageSimple* prev);
-		virtual ~ApplicationIcons();
+    ApplicationIcons(wxWizard* parent, wxWizardPageSimple* prev);
+    virtual ~ApplicationIcons();
 
-		//(*Declarations(ApplicationIcons)
-		wxCheckBox* cbChangeStartMenu;
-		wxTextCtrl* txtMenuFolder;
-		wxPanel* Panel1;
-		wxCheckBox* cbInternetShort;
-		wxCheckBox* cbUninstallShortCut;
-		wxStaticText* text2;
-		wxCheckBox* cbDesktopIcon;
-		wxStaticLine* StaticLine1;
-		wxCheckBox* cbDisableStartMenu;
-		wxCheckBox* cbQuickLunchShortCut;
-		//*)
+    //(*Declarations(ApplicationIcons)
+    wxCheckBox* cbChangeStartMenu;
+    wxTextCtrl* txtMenuFolder;
+    wxPanel* Panel1;
+    wxCheckBox* cbInternetShort;
+    wxCheckBox* cbUninstallShortCut;
+    wxStaticText* text2;
+    wxCheckBox* cbDesktopIcon;
+    wxStaticLine* StaticLine1;
+    wxCheckBox* cbDisableStartMenu;
+    wxCheckBox* cbQuickLunchShortCut;
+    //*)
 
-	protected:
+  protected:
 
-		//(*Identifiers(ApplicationIcons)
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT1;
-		static const long ID_PANEL1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT3;
-		static const long ID_TEXTCTRL2;
-		static const long ID_CHECKBOX4;
-		static const long ID_CHECKBOX3;
-		static const long ID_CHECKBOX1;
-		static const long ID_CHECKBOX2;
-		static const long ID_STATICTEXT4;
-		static const long ID_CHECKBOX6;
-		static const long ID_CHECKBOX5;
-		static const long ID_STATICTEXT7;
-		static const long ID_STATICTEXT8;
-		//*)
+    //(*Identifiers(ApplicationIcons)
+    static const long ID_STATICTEXT2;
+    static const long ID_STATICTEXT1;
+    static const long ID_PANEL1;
+    static const long ID_STATICLINE1;
+    static const long ID_STATICTEXT3;
+    static const long ID_TEXTCTRL2;
+    static const long ID_CHECKBOX4;
+    static const long ID_CHECKBOX3;
+    static const long ID_CHECKBOX1;
+    static const long ID_CHECKBOX2;
+    static const long ID_STATICTEXT4;
+    static const long ID_CHECKBOX6;
+    static const long ID_CHECKBOX5;
+    static const long ID_STATICTEXT7;
+    static const long ID_STATICTEXT8;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(ApplicationIcons)
-		void OncbChangeStartMenuClick(wxCommandEvent& event);
-		//*)
+    //(*Handlers(ApplicationIcons)
+    void OncbChangeStartMenuClick(wxCommandEvent& event);
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

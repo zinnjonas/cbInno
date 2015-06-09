@@ -5,19 +5,19 @@
 
 class CUninstallDelte
 {
-    public:
-        CUninstallDelte( void);
-        virtual ~CUninstallDelte();
+  public:
+    CUninstallDelte( void);
+    virtual ~CUninstallDelte();
 
-        void WriteInFile( wxTextFile* File);
+    void WriteInFile( wxTextFile* File);
 
-        void SetType(wxString val);
-        void SetName(wxString val);
+    void SetType(wxString val);
+    void SetName(wxString val);
 
-    private:
+  private:
 
-        wxString m_Type;
-        wxString m_Name;
+    wxString m_Type;
+    wxString m_Name;
 };
 
 #endif // CUNINSTALLDELTE_H

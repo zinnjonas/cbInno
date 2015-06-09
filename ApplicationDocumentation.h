@@ -16,50 +16,50 @@
 
 class ApplicationDocumentation: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		ApplicationDocumentation(wxWizard* parent, wxWizardPageSimple* prev);
-		virtual ~ApplicationDocumentation();
+    ApplicationDocumentation(wxWizard* parent, wxWizardPageSimple* prev);
+    virtual ~ApplicationDocumentation();
 
-		//(*Declarations(ApplicationDocumentation)
-		wxButton* btnAfter;
-		wxPanel* Panel1;
-		wxFileDialog* FileDialog1;
-		wxTextCtrl* txtBefore;
-		wxTextCtrl* txtLiecens;
-		wxButton* btnLiecense;
-		wxStaticLine* StaticLine1;
-		wxButton* btnBefore;
-		wxTextCtrl* txtAfter;
-		//*)
+    //(*Declarations(ApplicationDocumentation)
+    wxButton* btnAfter;
+    wxPanel* Panel1;
+    wxFileDialog* FileDialog1;
+    wxTextCtrl* txtBefore;
+    wxTextCtrl* txtLiecens;
+    wxButton* btnLiecense;
+    wxStaticLine* StaticLine1;
+    wxButton* btnBefore;
+    wxTextCtrl* txtAfter;
+    //*)
 
-	protected:
+  protected:
 
-		//(*Identifiers(ApplicationDocumentation)
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT1;
-		static const long ID_PANEL1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT3;
-		static const long ID_TEXTCTRL2;
-		static const long ID_BUTTON2;
-		static const long ID_STATICTEXT5;
-		static const long ID_TEXTCTRL1;
-		static const long ID_BUTTON1;
-		static const long ID_STATICTEXT4;
-		static const long ID_TEXTCTRL3;
-		static const long ID_BUTTON3;
-		//*)
+    //(*Identifiers(ApplicationDocumentation)
+    static const long ID_STATICTEXT2;
+    static const long ID_STATICTEXT1;
+    static const long ID_PANEL1;
+    static const long ID_STATICLINE1;
+    static const long ID_STATICTEXT3;
+    static const long ID_TEXTCTRL2;
+    static const long ID_BUTTON2;
+    static const long ID_STATICTEXT5;
+    static const long ID_TEXTCTRL1;
+    static const long ID_BUTTON1;
+    static const long ID_STATICTEXT4;
+    static const long ID_TEXTCTRL3;
+    static const long ID_BUTTON3;
+    //*)
 
-	private:
+  private:
 
-		//(*Handlers(ApplicationDocumentation)
-		void OnbtnLiecenseClick(wxCommandEvent& event);
-		void OnbtnBeforeClick(wxCommandEvent& event);
-		void OnbtnAfterClick(wxCommandEvent& event);
-		//*)
+    //(*Handlers(ApplicationDocumentation)
+    void OnbtnLiecenseClick(wxCommandEvent& event);
+    void OnbtnBeforeClick(wxCommandEvent& event);
+    void OnbtnAfterClick(wxCommandEvent& event);
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

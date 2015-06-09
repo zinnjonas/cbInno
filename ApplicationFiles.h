@@ -25,70 +25,70 @@ WX_DECLARE_OBJARRAY(File, ArrayFile);
 
 class ApplicationFiles: public wxWizardPageSimple
 {
-	public:
+  public:
 
-		ApplicationFiles(wxWizard* parent, wxWizardPageSimple* prev);
-		virtual ~ApplicationFiles();
+    ApplicationFiles(wxWizard* parent, wxWizardPageSimple* prev);
+    virtual ~ApplicationFiles();
 
-		//(*Declarations(ApplicationFiles)
-		wxButton* btnFolder;
-		wxButton* btnFiles;
-		wxStaticText* text1;
-		wxPanel* Panel1;
-		wxFileDialog* FileDialog1;
-		wxCheckBox* cbAllowStartAfterInstall;
-		wxDirDialog* DirDialog1;
-		wxTextCtrl* txtMainExe;
-		wxStaticLine* StaticLine1;
-		wxButton* btnRemove;
-		wxFileDialog* FileDialog2;
-		wxCheckBox* cbDoesntHaveMain;
-		wxButton* btnEdit;
-		wxListBox* lbFiles;
-		wxButton* btnMainExe;
-		//*)
+    //(*Declarations(ApplicationFiles)
+    wxButton* btnFolder;
+    wxButton* btnFiles;
+    wxStaticText* text1;
+    wxPanel* Panel1;
+    wxFileDialog* FileDialog1;
+    wxCheckBox* cbAllowStartAfterInstall;
+    wxDirDialog* DirDialog1;
+    wxTextCtrl* txtMainExe;
+    wxStaticLine* StaticLine1;
+    wxButton* btnRemove;
+    wxFileDialog* FileDialog2;
+    wxCheckBox* cbDoesntHaveMain;
+    wxButton* btnEdit;
+    wxListBox* lbFiles;
+    wxButton* btnMainExe;
+    //*)
 
-        wxString lastPath;
+    wxString lastPath;
 
-        ArrayFile Files;
+    ArrayFile Files;
 
-	protected:
+  protected:
 
-		//(*Identifiers(ApplicationFiles)
-		static const long ID_STATICTEXT2;
-		static const long ID_STATICTEXT1;
-		static const long ID_PANEL1;
-		static const long ID_STATICLINE1;
-		static const long ID_STATICTEXT3;
-		static const long ID_TEXTCTRL1;
-		static const long ID_BUTTON1;
-		static const long ID_CHECKBOX1;
-		static const long ID_CHECKBOX2;
-		static const long ID_STATICTEXT4;
-		static const long ID_LISTBOX1;
-		static const long ID_BUTTON2;
-		static const long ID_BUTTON3;
-		static const long ID_BUTTON4;
-		static const long ID_BUTTON5;
-		static const long ID_STATICTEXT7;
-		static const long ID_STATICTEXT8;
-		//*)
+    //(*Identifiers(ApplicationFiles)
+    static const long ID_STATICTEXT2;
+    static const long ID_STATICTEXT1;
+    static const long ID_PANEL1;
+    static const long ID_STATICLINE1;
+    static const long ID_STATICTEXT3;
+    static const long ID_TEXTCTRL1;
+    static const long ID_BUTTON1;
+    static const long ID_CHECKBOX1;
+    static const long ID_CHECKBOX2;
+    static const long ID_STATICTEXT4;
+    static const long ID_LISTBOX1;
+    static const long ID_BUTTON2;
+    static const long ID_BUTTON3;
+    static const long ID_BUTTON4;
+    static const long ID_BUTTON5;
+    static const long ID_STATICTEXT7;
+    static const long ID_STATICTEXT8;
+    //*)
 
-		WizardFile* FileDialog;
+    WizardFile* FileDialog;
 
-	private:
+  private:
 
-		//(*Handlers(ApplicationFiles)
-		void OncbDoesntHaveMainClick(wxCommandEvent& event);
-		void OnbtnMainExeClick(wxCommandEvent& event);
-		void OnbtnFilesClick(wxCommandEvent& event);
-		void OnlbFilesSelect(wxCommandEvent& event);
-		void OnbtnFolderClick(wxCommandEvent& event);
-		void OnbtnEditClick(wxCommandEvent& event);
-		void OnbtnRemoveClick(wxCommandEvent& event);
-		//*)
+    //(*Handlers(ApplicationFiles)
+    void OncbDoesntHaveMainClick(wxCommandEvent& event);
+    void OnbtnMainExeClick(wxCommandEvent& event);
+    void OnbtnFilesClick(wxCommandEvent& event);
+    void OnlbFilesSelect(wxCommandEvent& event);
+    void OnbtnFolderClick(wxCommandEvent& event);
+    void OnbtnEditClick(wxCommandEvent& event);
+    void OnbtnRemoveClick(wxCommandEvent& event);
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

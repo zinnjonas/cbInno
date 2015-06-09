@@ -5,23 +5,23 @@
 
 class CTypes
 {
-    public:
-        CTypes( void);
-        virtual ~CTypes();
+  public:
+    CTypes( void);
+    virtual ~CTypes();
 
-        void WriteInFile( wxTextFile* File);
+    void WriteInFile( wxTextFile* File);
 
-        void Set( wxString name, wxString description);
+    void Set( wxString name, wxString description);
 
-        void SetFlag( wxString Flags);
+    void SetFlag( wxString Flags);
 
-        wxString GetName( void);
+    wxString GetName( void);
 
-    protected:
+  protected:
 
-        wxString m_Name;
-        wxString m_Description;
-        wxString m_Flags;
+    wxString m_Name;
+    wxString m_Description;
+    wxString m_Flags;
 };
 
 #endif // CTYPES_H
