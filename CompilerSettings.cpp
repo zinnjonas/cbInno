@@ -8,6 +8,8 @@
 #include <wx/string.h>
 //*)
 
+#include <prep.h>
+
 #include "Images/LinksOben.xpm"
 
 //(*IdInit(CompilerSettings)
@@ -164,14 +166,14 @@ CompilerSettings::~CompilerSettings()
 }
 
 
-void CompilerSettings::OnbtnBrowsePutputfolderClick(wxCommandEvent& event)
+void CompilerSettings::OnbtnBrowsePutputfolderClick(cb_unused wxCommandEvent& event)
 {
   if( DirDialog1->ShowModal() == wxID_OK)
     txtOutputFolder->SetValue( DirDialog1->GetPath());
 
 }
 
-void CompilerSettings::OnbtnBrowsIconClick(wxCommandEvent& event)
+void CompilerSettings::OnbtnBrowsIconClick(cb_unused wxCommandEvent& event)
 {
   if( FileDialog1->ShowModal() == wxID_OK)
     txtCustomIcon->SetValue( FileDialog1->GetPath());

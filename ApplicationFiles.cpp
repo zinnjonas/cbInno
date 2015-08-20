@@ -182,7 +182,7 @@ ApplicationFiles::~ApplicationFiles()
 }
 
 
-void ApplicationFiles::OncbDoesntHaveMainClick(wxCommandEvent& event)
+void ApplicationFiles::OncbDoesntHaveMainClick(cb_unused wxCommandEvent& event)
 {
   if( cbDoesntHaveMain->IsChecked())
   {
@@ -200,7 +200,7 @@ void ApplicationFiles::OncbDoesntHaveMainClick(wxCommandEvent& event)
   }
 }
 
-void ApplicationFiles::OnbtnMainExeClick(wxCommandEvent& event)
+void ApplicationFiles::OnbtnMainExeClick(cb_unused wxCommandEvent& event)
 {
   if( txtMainExe->GetValue().Len() > 0)
     FileDialog1->SetPath( txtMainExe->GetValue());
@@ -209,7 +209,7 @@ void ApplicationFiles::OnbtnMainExeClick(wxCommandEvent& event)
     txtMainExe->SetValue(FileDialog1->GetPath());
 }
 
-void ApplicationFiles::OnbtnFilesClick(wxCommandEvent& event)
+void ApplicationFiles::OnbtnFilesClick(cb_unused wxCommandEvent& event)
 {
   if( lastPath.Len() == 0)
     if( txtMainExe->GetValue().Len() > 0)
@@ -236,13 +236,13 @@ void ApplicationFiles::OnbtnFilesClick(wxCommandEvent& event)
   }
 }
 
-void ApplicationFiles::OnlbFilesSelect(wxCommandEvent& event)
+void ApplicationFiles::OnlbFilesSelect(cb_unused wxCommandEvent& event)
 {
   btnEdit->Enable( true);
   btnRemove->Enable( true);
 }
 
-void ApplicationFiles::OnbtnFolderClick(wxCommandEvent& event)
+void ApplicationFiles::OnbtnFolderClick(cb_unused wxCommandEvent& event)
 {
   if( DirDialog1->ShowModal() == wxID_OK)
   {
@@ -275,7 +275,7 @@ void ApplicationFiles::OnbtnFolderClick(wxCommandEvent& event)
   }
 }
 
-void ApplicationFiles::OnbtnEditClick(wxCommandEvent& event)
+void ApplicationFiles::OnbtnEditClick(cb_unused wxCommandEvent& event)
 {
 
   if( lbFiles->GetSelection() != wxNOT_FOUND)
@@ -288,7 +288,7 @@ void ApplicationFiles::OnbtnEditClick(wxCommandEvent& event)
   }
 }
 
-void ApplicationFiles::OnbtnRemoveClick(wxCommandEvent& event)
+void ApplicationFiles::OnbtnRemoveClick(cb_unused wxCommandEvent& event)
 {
   if( lbFiles->GetSelection() == wxNOT_FOUND)
   {

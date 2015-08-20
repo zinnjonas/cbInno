@@ -8,6 +8,8 @@
 #include <wx/string.h>
 //*)
 
+#include <prep.h>
+
 #include "Images/LinksOben.xpm"
 
 //(*IdInit(ApplicationIcons)
@@ -175,7 +177,7 @@ ApplicationIcons::~ApplicationIcons()
 }
 
 
-void ApplicationIcons::OncbChangeStartMenuClick(wxCommandEvent& event)
+void ApplicationIcons::OncbChangeStartMenuClick(cb_unused wxCommandEvent& event)
 {
   cbDisableStartMenu->Enable( cbChangeStartMenu->IsChecked());
 }

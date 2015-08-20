@@ -17,6 +17,8 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/process.h>
+
 #include <cbplugin.h> // for "class cbPlugin"
 #include <loggers.h>
 
@@ -76,7 +78,7 @@ class Inno : public cbPlugin
       * @param toolBar the wxToolBar to create items on
       * @return The plugin should return true if it needed the toolbar, false if not
       */
-    virtual bool BuildToolBar(wxToolBar* toolBar)
+    virtual bool BuildToolBar(cb_unused wxToolBar* toolBar)
     {
       return false;
     }
@@ -84,7 +86,7 @@ class Inno : public cbPlugin
     void AddFileMasksToProjectManager(void);
     bool IsGroupNameExisting(wxString sName, const FilesGroupsAndMasks *fm);
 
-    void OnProcessEnd( wxProcessEvent& evt);
+    void OnProcessEnd(wxProcessEvent& evt);
   protected:
     /** Any descendent plugin should override this virtual method and
       * perform any necessary initialization. This method is called by

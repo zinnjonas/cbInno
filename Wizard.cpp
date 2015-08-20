@@ -242,6 +242,9 @@ void MyStandartWizard::InWizardChanging( wxWizardEvent& event)
           return;
         }
         break;
+
+      default: // TODO: Implement
+        break;
     }
   }
 
@@ -383,6 +386,8 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
         case 9:
           destDir = Page4->Files.Item( i).ExternDestionation;
           break;
+        default: // TODO: Implement
+          break;
       }
 
       if( Page4->Files.Item( i).DestinationSub.Len() > 0)
@@ -475,6 +480,8 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
             break;
           case 20:
             Dummy.Set( _T("spanish"), _T("compiler:Languages\\Spanish.isl"));
+            break;
+          default: // TODO: Implement
             break;
         }
         InnoFile.Languages.Add( Dummy);

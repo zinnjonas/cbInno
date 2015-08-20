@@ -7,6 +7,9 @@
 #include <wx/image.h>
 #include <wx/string.h>
 //*)
+
+#include <prep.h>
+
 #include "Images/LinksOben.xpm"
 
 //(*IdInit(SetupLanguages)
@@ -153,7 +156,7 @@ bool SetupLanguages::IsChecked( void)
   return false;
 }
 
-void SetupLanguages::OnbtnAllClick(wxCommandEvent& event)
+void SetupLanguages::OnbtnAllClick(cb_unused wxCommandEvent& event)
 {
   for( unsigned int i = 0; i < lbLanguages->GetCount(); i++)
   {
@@ -161,7 +164,7 @@ void SetupLanguages::OnbtnAllClick(wxCommandEvent& event)
   }
 }
 
-void SetupLanguages::OnbtnNoneClick(wxCommandEvent& event)
+void SetupLanguages::OnbtnNoneClick(cb_unused wxCommandEvent& event)
 {
   for( unsigned int i = 0; i < lbLanguages->GetCount(); i++)
   {

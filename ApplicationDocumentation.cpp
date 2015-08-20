@@ -8,6 +8,8 @@
 #include <wx/string.h>
 //*)
 
+#include <prep.h>
+
 #include "Images/LinksOben.xpm"
 
 //(*IdInit(ApplicationDocumentation)
@@ -147,7 +149,7 @@ ApplicationDocumentation::~ApplicationDocumentation()
 }
 
 
-void ApplicationDocumentation::OnbtnLiecenseClick(wxCommandEvent& event)
+void ApplicationDocumentation::OnbtnLiecenseClick(cb_unused wxCommandEvent& event)
 {
   FileDialog1->SetPath( txtLiecens->GetValue());
 
@@ -155,7 +157,7 @@ void ApplicationDocumentation::OnbtnLiecenseClick(wxCommandEvent& event)
     txtLiecens->SetValue( FileDialog1->GetPath());
 }
 
-void ApplicationDocumentation::OnbtnBeforeClick(wxCommandEvent& event)
+void ApplicationDocumentation::OnbtnBeforeClick(cb_unused wxCommandEvent& event)
 {
   FileDialog1->SetPath( txtBefore->GetValue());
 
@@ -163,7 +165,7 @@ void ApplicationDocumentation::OnbtnBeforeClick(wxCommandEvent& event)
     txtBefore->SetValue( FileDialog1->GetPath());
 }
 
-void ApplicationDocumentation::OnbtnAfterClick(wxCommandEvent& event)
+void ApplicationDocumentation::OnbtnAfterClick(cb_unused wxCommandEvent& event)
 {
   FileDialog1->SetPath( txtAfter->GetValue());
 

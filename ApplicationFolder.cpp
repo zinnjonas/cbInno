@@ -7,6 +7,9 @@
 #include <wx/image.h>
 #include <wx/string.h>
 //*)
+
+#include <prep.h>
+
 #include "Images/LinksOben.xpm"
 
 //(*IdInit(ApplicationFolder)
@@ -171,7 +174,7 @@ ApplicationFolder::~ApplicationFolder()
 }
 
 
-void ApplicationFolder::OnchProgrammFolderSelect(wxCommandEvent& event)
+void ApplicationFolder::OnchProgrammFolderSelect(cb_unused wxCommandEvent& event)
 {
 
   if( chProgrammFolder->GetSelection() == 0)
@@ -180,7 +183,7 @@ void ApplicationFolder::OnchProgrammFolderSelect(wxCommandEvent& event)
     txtCustom->Enable( true);
 }
 
-void ApplicationFolder::OncbDoesntFolderClick(wxCommandEvent& event)
+void ApplicationFolder::OncbDoesntFolderClick(cb_unused wxCommandEvent& event)
 {
   if( cbDoesntFolder->IsChecked())
   {

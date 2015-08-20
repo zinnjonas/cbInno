@@ -11,12 +11,14 @@ const long CCreateDialog::ID_TEXTCTRL1 = wxNewId();
 const long CCreateDialog::ID_BUTTON1 = wxNewId();
 //*)
 
+#include <prep.h>
+
 BEGIN_EVENT_TABLE(CCreateDialog,wxDialog)
   //(*EventTable(CCreateDialog)
   //*)
 END_EVENT_TABLE()
 
-CCreateDialog::CCreateDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
+CCreateDialog::CCreateDialog(wxWindow* parent,wxWindowID id,cb_unused const wxPoint& pos,cb_unused const wxSize& size)
 {
   //(*Initialize(CCreateDialog)
   wxBoxSizer* BoxSizer1;
@@ -54,7 +56,7 @@ void CCreateDialog::SetName( wxString Name)
   TextCtrl1->ShowPosition(TextCtrl1->GetLastPosition());
 }
 
-void CCreateDialog::OnbtnOKClick(wxCommandEvent& event)
+void CCreateDialog::OnbtnOKClick(cb_unused wxCommandEvent& event)
 {
   EndModal( 1);
 }

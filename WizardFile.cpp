@@ -6,6 +6,8 @@
 #include <wx/string.h>
 //*)
 
+#include <prep.h>
+
 //(*IdInit(WizardFile)
 const long WizardFile::ID_STATICTEXT1 = wxNewId();
 const long WizardFile::ID_TEXTCTRL1 = wxNewId();
@@ -25,7 +27,7 @@ BEGIN_EVENT_TABLE(WizardFile,wxDialog)
   //*)
 END_EVENT_TABLE()
 
-WizardFile::WizardFile(wxWindow* parent, File Data,wxWindowID id,const wxPoint& pos,const wxSize& size)
+WizardFile::WizardFile(wxWindow* parent, File Data,cb_unused wxWindowID id,cb_unused const wxPoint& pos,cb_unused const wxSize& size)
 {
   //(*Initialize(WizardFile)
   wxStaticBoxSizer* StaticBoxSizer2;
@@ -128,7 +130,7 @@ WizardFile::~WizardFile()
 }
 
 
-void WizardFile::OnchDestinationSelect(wxCommandEvent& event)
+void WizardFile::OnchDestinationSelect(cb_unused wxCommandEvent& event)
 {
   if( chDestination->GetSelection() == 9)
     txtDestination->Enable( true);
@@ -136,12 +138,12 @@ void WizardFile::OnchDestinationSelect(wxCommandEvent& event)
     txtDestination->Enable( false);
 }
 
-void WizardFile::OncbRecurseClick(wxCommandEvent& event)
+void WizardFile::OncbRecurseClick(cb_unused wxCommandEvent& event)
 {
   cbInclude->Enable( cbRecurse->IsChecked());
 }
 
-void WizardFile::OnbtnOKClick(wxCommandEvent& event)
+void WizardFile::OnbtnOKClick(cb_unused wxCommandEvent& event)
 {
   if( (chDestination->GetSelection() != 9) || ( !txtDestination->IsEmpty()))
   {
@@ -159,7 +161,7 @@ void WizardFile::OnbtnOKClick(wxCommandEvent& event)
   }
 }
 
-void WizardFile::OnbtnCancelClick(wxCommandEvent& event)
+void WizardFile::OnbtnCancelClick(cb_unused wxCommandEvent& event)
 {
   EndModal( false);
 }

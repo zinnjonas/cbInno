@@ -1,7 +1,14 @@
 #include <sdk.h> // Code::Blocks SDK
-#include <filegroupsandmasks.h>
+
+#include <cbeditor.h>
+#include <cbproject.h>
+#include <configmanager.h>
 #include <configurationpanel.h>
+#include <editormanager.h>
 #include <filefilters.h>
+#include <filegroupsandmasks.h>
+#include <logmanager.h>
+
 #include "Inno.h"
 #include "Wizard.h"
 #include "CreateDialog.h"
@@ -74,7 +81,7 @@ void Inno::OnAttach()
   }
 }
 
-void Inno::OnRelease(bool appShutDown)
+void Inno::OnRelease(cb_unused bool appShutDown)
 {
   // do de-initialization for your plugin
   // if appShutDown is true, the plugin is unloaded because Code::Blocks is being shut down,
@@ -200,10 +207,10 @@ bool Inno::IsGroupNameExisting(wxString sName, const FilesGroupsAndMasks *fm)
   return(false);
 }
 
-void Inno::OnEmpty(wxCommandEvent &event)
+void Inno::OnEmpty(cb_unused wxCommandEvent& event)
 {
 
-  CInno Inno;
+  CInno Inno; // TODO: No good style to name a local variable after the class!
   bool OverwriteFile = true;
   if( Inno.FileExist( Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.')))
     if( wxID_NO == cbMessageBox( _("Do you want to overwrite the existing File?"), _("File exist"), wxYES_NO | wxICON_QUESTION))
@@ -227,9 +234,9 @@ void Inno::OnEmpty(wxCommandEvent &event)
   }
 }
 
-void Inno::OnNew(wxCommandEvent &event)
+void Inno::OnNew(cb_unused wxCommandEvent& event)
 {
-  CInno Inno;
+  CInno Inno; // TODO: No good style to name a local variable after the class!
   Inno.Create( Manager::Get()->GetAppWindow());
 
   wxString Name;
@@ -264,8 +271,8 @@ void Inno::OnNew(wxCommandEvent &event)
 
         if( wxYES == wxMessageBox( _T( "Do you want to compile the Inno Setup file?"), _T( "Inno Setup"), wxYES_NO | wxICON_QUESTION))
         {
-          wxCommandEvent event;
-          OnInnoBuild(event);
+          wxCommandEvent e;
+          OnInnoBuild(e);
         }
       }
     }
@@ -278,7 +285,7 @@ void Inno::OnNew(wxCommandEvent &event)
   Inno.Delete();
 }
 
-void Inno::OnInnoBuild(wxCommandEvent &event)
+void Inno::OnInnoBuild(cb_unused wxCommandEvent& event)
 {
   ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("inno"));
   wxString path = pCfg->Read(_T("iscc_path"), _T(""));
@@ -329,7 +336,7 @@ void Inno::OnInnoBuild(wxCommandEvent &event)
   }
 }
 
-void Inno::OnProcessEnd( wxProcessEvent& evt)
+void Inno::OnProcessEnd(cb_unused wxProcessEvent& evt)
 {
   if( m_running)
   {

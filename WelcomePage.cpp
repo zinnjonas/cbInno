@@ -14,6 +14,8 @@ const long WelcomePage::ID_STATICTEXT2 = wxNewId();
 const long WelcomePage::ID_CHECKBOX1 = wxNewId();
 //*)
 
+#include <prep.h>
+
 #include "Images/Wizard.xpm"
 
 BEGIN_EVENT_TABLE(WelcomePage,wxWizardPageSimple)
@@ -71,7 +73,7 @@ bool WelcomePage::GetIsEmptySet( void)
   return m_Empty;
 }
 
-void WelcomePage::OnchEmptyClick(wxCommandEvent& event)
+void WelcomePage::OnchEmptyClick(cb_unused wxCommandEvent& event)
 {
   m_Empty = !m_Empty;
 
