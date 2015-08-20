@@ -210,9 +210,9 @@ bool Inno::IsGroupNameExisting(wxString sName, const FilesGroupsAndMasks *fm)
 void Inno::OnEmpty(cb_unused wxCommandEvent& event)
 {
 
-  CInno Inno; // TODO: No good style to name a local variable after the class!
+  CInno inno;
   bool OverwriteFile = true;
-  if( Inno.FileExist( Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.')))
+  if( inno.FileExist( Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.')))
     if( wxID_NO == cbMessageBox( _("Do you want to overwrite the existing File?"), _("File exist"), wxYES_NO | wxICON_QUESTION))
       OverwriteFile = false;
 
@@ -221,11 +221,11 @@ void Inno::OnEmpty(cb_unused wxCommandEvent& event)
     if(Manager::Get()->GetProjectManager()->GetActiveProject())
     {
       if(wxID_YES == cbMessageBox(_("Do you want to add the inno file to the active project?"),_("New Inno Setup"),wxYES|wxNO))
-        Inno.AddToProject(true);
+        inno.AddToProject(true);
       else
-        Inno.AddToProject(false);
+        inno.AddToProject(false);
 
-      Inno.WriteEmptyFile(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.'));
+      inno.WriteEmptyFile(Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.'));
     }
     else
     {
@@ -236,13 +236,13 @@ void Inno::OnEmpty(cb_unused wxCommandEvent& event)
 
 void Inno::OnNew(cb_unused wxCommandEvent& event)
 {
-  CInno Inno; // TODO: No good style to name a local variable after the class!
-  Inno.Create( Manager::Get()->GetAppWindow());
+  CInno inno;
+  inno.Create( Manager::Get()->GetAppWindow());
 
   wxString Name;
 
   bool OverwriteFile = true;
-  if( Inno.FileExist( Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.')))
+  if( inno.FileExist( Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.')))
     if( wxID_NO == cbMessageBox( _("Do you want to overwrite the existing File?"), _("File exist"), wxYES_NO | wxICON_QUESTION))
       OverwriteFile = false;
 
@@ -253,16 +253,16 @@ void Inno::OnNew(cb_unused wxCommandEvent& event)
     {
       Name = Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.');
       Name = Name.AfterLast( '\\');
-      Inno.Set( Name);
+      inno.Set( Name);
       if(wxID_YES == cbMessageBox(_("Do you want to add the inno file to the active project?"),_("New Inno Setup"),wxYES|wxNO))
-        Inno.AddToProject(true);
+        inno.AddToProject(true);
       else
-        Inno.AddToProject(false);
+        inno.AddToProject(false);
 
-      if( Inno.ShowStandartWizard())
+      if( inno.ShowStandartWizard())
       {
         wxString file_name = Manager::Get()->GetProjectManager()->GetActiveProject()->GetFilename().BeforeLast('.');
-        Inno.WriteFile(file_name);
+        inno.WriteFile(file_name);
         iss_name = file_name + L".iss";
 
         cbEditor* ed = Manager::Get()->GetEditorManager()->Open(iss_name);
@@ -282,7 +282,7 @@ void Inno::OnNew(cb_unused wxCommandEvent& event)
     }
   }
 
-  Inno.Delete();
+  inno.Delete();
 }
 
 void Inno::OnInnoBuild(cb_unused wxCommandEvent& event)

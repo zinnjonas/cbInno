@@ -243,7 +243,8 @@ void MyStandartWizard::InWizardChanging( wxWizardEvent& event)
         }
         break;
 
-      default: // TODO: Implement
+      default: // TODO: Test
+        wxMessageBox(_T("What can happen?"));
         break;
     }
   }
@@ -354,6 +355,7 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
       CFiles Dummy;
       wxString Source = Page4->Files.Item( i).Source;
       wxString destDir;
+// NOTE (Jonas#1#): Insert something for the tmp stuff
       switch( Page4->Files.Item(i).Destination)
       {
         case 0:
@@ -386,7 +388,8 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
         case 9:
           destDir = Page4->Files.Item( i).ExternDestionation;
           break;
-        default: // TODO: Implement
+        default:
+          destDir = _T("{app}");
           break;
       }
 
@@ -410,6 +413,8 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
       InnoFile.Setup.SetInfoBefor( Page6->txtBefore->GetValue());
     if( !Page6->txtAfter->IsEmpty())
       InnoFile.Setup.SetInfoAfter( Page6->txtAfter->GetValue());
+
+    bool lang_selected = false;
 
     for( unsigned int i = 0; i < Page7->lbLanguages->GetCount(); i++)
     {
@@ -481,7 +486,8 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
           case 20:
             Dummy.Set( _T("spanish"), _T("compiler:Languages\\Spanish.isl"));
             break;
-          default: // TODO: Implement
+          default:
+            Dummy.Set( _T("english"), _T("compiler:Default.isl"));
             break;
         }
         InnoFile.Languages.Add( Dummy);
