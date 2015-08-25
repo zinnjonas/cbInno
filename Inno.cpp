@@ -14,20 +14,22 @@
 #include "CreateDialog.h"
 #include "InnoSettings.h"
 
+std::set<CEditor*> Inno::m_editors;
+
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
 {
-PluginRegistrant<Inno> reg(_T("Inno"));
-const int ID_INNO_EMPTY = wxNewId();
-const int ID_INNO_NEW = wxNewId();
-const int ID_INNO_BUILD = wxNewId();
-const int ID_INNO_THREAD = wxNewId();
+  PluginRegistrant<Inno> reg(_T("Inno"));
+  const int ID_INNO_EMPTY = wxNewId();
+  const int ID_INNO_NEW = wxNewId();
+  const int ID_INNO_BUILD = wxNewId();
+  const int ID_INNO_THREAD = wxNewId();
 }
 
 
 // events handling
-BEGIN_EVENT_TABLE(Inno, cbPlugin)
+BEGIN_EVENT_TABLE(Inno, cbMimePlugin)
   // add any events you want to handle here
   EVT_MENU( ID_INNO_EMPTY, Inno::OnEmpty)
   EVT_MENU(ID_INNO_NEW, Inno::OnNew)
@@ -122,6 +124,32 @@ void Inno::BuildModuleMenu(const ModuleType type, wxMenu* menu, const FileTreeDa
   }
 }
 
+bool Inno::CanHandleFile(const wxString& filename) const
+{
+  wxString fn;
+
+  fn = filename;
+  fn.MakeUpper();
+
+  if( fn.Right(4) == _T(".ISS"))
+    return true;
+
+  return false;
+}
+
+int Inno::OpenFile(const wxString& filename)
+{
+
+  CEditor* editor = new CEditor(filename);
+  m_editors.insert(editor);
+  return 0;
+}
+
+bool Inno::HandlesEverything() const
+{
+  return false;
+}
+
 cbConfigurationPanel* Inno::GetConfigurationPanel(wxWindow* parent)
 {
   InnoSettings* dlg = new InnoSettings(parent);
@@ -129,7 +157,7 @@ cbConfigurationPanel* Inno::GetConfigurationPanel(wxWindow* parent)
 }
 
 /** This method adds Filemasks, such as "*.iss" to the project manager
-  * This allows the display of all images into 1 virtual folder "Images"
+  * This allows the display of all inno setup into 1 virtual folder "Inno"
   */
 void Inno::AddFileMasksToProjectManager(void)
 {
@@ -305,7 +333,7 @@ void Inno::OnInnoBuild(cb_unused wxCommandEvent& event)
   m_running = true;
   wxProcess* compile = new wxProcess(this, ID_INNO_THREAD);
   compile->Redirect();
-  long pid = wxExecute(command, wxEXEC_ASYNC, compile);
+  wxExecute(command, wxEXEC_ASYNC, compile);
   if( !compile)
   {
     cbMessageBox(L"can't open a process to the iscc");

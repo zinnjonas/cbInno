@@ -21,6 +21,8 @@
 
 #include <cbplugin.h> // for "class cbPlugin"
 #include <loggers.h>
+#include <set>
+#include "Editor.h"
 
 class Consume : public wxThread
 {
@@ -34,7 +36,7 @@ class Consume : public wxThread
     TextCtrlLogger* m_logger;
 };
 
-class Inno : public cbPlugin
+class Inno : public cbMimePlugin
 {
   public:
     /** Constructor. */
@@ -83,6 +85,13 @@ class Inno : public cbPlugin
       return false;
     }
 
+    virtual bool CanHandleFile(const wxString& filename) const;
+
+
+    virtual int OpenFile(const wxString& filename);
+
+    virtual bool HandlesEverything() const;
+
     void AddFileMasksToProjectManager(void);
     bool IsGroupNameExisting(wxString sName, const FilesGroupsAndMasks *fm);
 
@@ -124,6 +133,7 @@ class Inno : public cbPlugin
     int m_log_pos;
     bool m_running;
     Consume* m_consume;
+    static std::set< CEditor* > m_editors;
 
     DECLARE_EVENT_TABLE();
 };

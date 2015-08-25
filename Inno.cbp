@@ -29,6 +29,7 @@
 					<Add option="-DWX_PRECOMP" />
 					<Add option="-DwxUSE_UNICODE" />
 					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-D__WIN32__" />
 					<Add directory="../../../include" />
 					<Add directory="../../../sdk/wxscintilla/include" />
 					<Add directory="$(#wx.include)" />
@@ -81,6 +82,8 @@
 		<Unit filename="CreateDialog.h" />
 		<Unit filename="CustomMessages.cpp" />
 		<Unit filename="CustomMessages.h" />
+		<Unit filename="Editor.cpp" />
+		<Unit filename="Editor.h" />
 		<Unit filename="Files.cpp" />
 		<Unit filename="Files.h" />
 		<Unit filename="FinishWizard.cpp" />
@@ -90,9 +93,30 @@
 		<Unit filename="Images/Inno.xpm" />
 		<Unit filename="Images/LinksOben.xpm" />
 		<Unit filename="Images/Wizard.xpm" />
+		<Unit filename="Images/custom_msg.xpm" />
+		<Unit filename="Images/files.xpm" />
+		<Unit filename="Images/folder.xpm" />
+		<Unit filename="Images/icon.xpm" />
+		<Unit filename="Images/ini.xpm" />
+		<Unit filename="Images/install.xpm" />
+		<Unit filename="Images/install_del.xpm" />
+		<Unit filename="Images/language.xpm" />
+		<Unit filename="Images/msg.xpm" />
+		<Unit filename="Images/pas.xpm" />
+		<Unit filename="Images/registry.xpm" />
+		<Unit filename="Images/script.xpm" />
+		<Unit filename="Images/steps.xpm" />
+		<Unit filename="Images/tasks.xpm" />
+		<Unit filename="Images/types.xpm" />
+		<Unit filename="Images/uninstall.xpm" />
+		<Unit filename="Images/uninstall_del.xpm" />
 		<Unit filename="Inno.cpp" />
 		<Unit filename="Inno.h" />
 		<Unit filename="Inno.iss" />
+		<Unit filename="InnoEditor.cpp" />
+		<Unit filename="InnoEditor.h" />
+		<Unit filename="InnoEditorBase.cpp" />
+		<Unit filename="InnoEditorBase.h" />
 		<Unit filename="InnoSettings.cpp" />
 		<Unit filename="InnoSettings.h" />
 		<Unit filename="Languages.cpp" />
@@ -117,6 +141,9 @@
 		<Unit filename="Wizard.h" />
 		<Unit filename="WizardFile.cpp" />
 		<Unit filename="WizardFile.h" />
+		<Unit filename="inno.xpm" />
+		<Unit filename="lexers/lexer_inno.sample" />
+		<Unit filename="lexers/lexer_inno.xml" />
 		<Unit filename="manifest.xml" />
 		<Unit filename="wxsmith/ApplicationDocumentation.wxs" />
 		<Unit filename="wxsmith/ApplicationFiles.wxs" />
@@ -126,6 +153,7 @@
 		<Unit filename="wxsmith/CompilerSettings.wxs" />
 		<Unit filename="wxsmith/CreateDialog.wxs" />
 		<Unit filename="wxsmith/FinishWizard.wxs" />
+		<Unit filename="wxsmith/InnoEditor.wxs" />
 		<Unit filename="wxsmith/InnoSettings.wxs" />
 		<Unit filename="wxsmith/SetupLanguages.wxs" />
 		<Unit filename="wxsmith/WelcomePage.wxs" />
@@ -150,6 +178,7 @@
 					<wxPanel wxs="wxsmith/WelcomePage.wxs" src="WelcomePage.cpp" hdr="WelcomePage.h" fwddecl="0" i18n="1" name="WelcomePage" language="CPP" />
 					<wxPanel wxs="wxsmith/WizardFile.wxs" src="WizardFile.cpp" hdr="WizardFile.h" fwddecl="0" i18n="1" name="WizardFile" language="CPP" />
 					<wxPanel wxs="wxsmith/InnoSettings.wxs" src="InnoSettings.cpp" hdr="InnoSettings.h" xrc="InnoSettings.xrc" fwddecl="0" i18n="1" name="InnoSettings" language="CPP" />
+					<wxPanel wxs="wxsmith/InnoEditor.wxs" src="InnoEditor.cpp" hdr="InnoEditor.h" fwddecl="0" i18n="1" name="InnoEditor" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

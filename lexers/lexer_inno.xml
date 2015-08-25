@@ -133,7 +133,6 @@
                     StreamCommentEnd=""
                     BoxCommentStart=" "
                     BoxCommentMid=""
-                    BoxCommentEnd=""
-                    CaseSensitive="1"/>
+                    BoxCommentEnd=""/>
         </Lexer>
 </CodeBlocks_lexer_properties>
