@@ -22,14 +22,20 @@
 #include "Images\uninstall_del.xpm"
 //----  --------------------------------------------------------------------------------------------
 
+#include <wx/textfile.h>
+#include <logmanager.h>
+#include <editormanager.h>
+
 //(*InternalHeaders(InnoEditor)
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
 
 //(*IdInit(InnoEditor)
+const long InnoEditor::ID_BUILD = wxNewId();
 const long InnoEditor::ID_TREECTRL1 = wxNewId();
 const long InnoEditor::ID_BUTTON1 = wxNewId();
+const long InnoEditor::ID_LISTCTRL1 = wxNewId();
 const long InnoEditor::ID_PANEL1 = wxNewId();
 //*)
 
@@ -38,15 +44,15 @@ BEGIN_EVENT_TABLE(InnoEditor,cbEditor)
 	//*)
 END_EVENT_TABLE()
 
-InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, const wxString& fn)
- : cbEditor( parent, Manager::Get()->GetFileManager()->Load(filename), fn,
-             new EditorColourSet(Manager::Get()->GetConfigManager(_T("editor"))->Read(_T("/colour_sets/active_colour_set"), COLORSET_DEFAULT))),
-		m_script(true)
+InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename)
+ : cbEditor( parent, Manager::Get()->GetFileManager()->Load(filename), filename,
+						 Manager::Get()->GetEditorManager()->GetColourSet()),
+		inno_part(SCRIPT)
 {
 
 	wxBoxSizer* sizer = static_cast<wxBoxSizer*>(GetSizer());
 
-	wxFileName file = wxFileName(fn);
+	wxFileName file = wxFileName(filename);
 	m_name = file.GetName();
 	m_name += _T("[.");
 	m_name += file.GetExt();
@@ -54,8 +60,12 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, const wxStri
 	Freeze();
 	//(*Initialize(InnoEditor)
 	wxBoxSizer* BoxSizer2;
+	wxBoxSizer* BoxSizer1;
 	wxBoxSizer* BoxSizer3;
 
+	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
+	m_build = new wxButton(this, ID_BUILD, _("Build"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUILD"));
+	BoxSizer1->Add(m_build, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
 	TreeCtrl1 = new wxTreeCtrl(this, ID_TREECTRL1, wxDefaultPosition, wxSize(205,460), 0, wxDefaultValidator, _T("ID_TREECTRL1"));
 	wxTreeItemId TreeCtrl1_Item1 = TreeCtrl1->AddRoot(_T("root"));
 	wxTreeItemId TreeCtrl1_Item2 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Script"));
@@ -78,17 +88,22 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, const wxStri
 	wxTreeItemId TreeCtrl1_Item19 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Pre Compilation Steps"));
 	wxTreeItemId TreeCtrl1_Item20 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Post Compilation Steps"));
 	TreeCtrl1->ScrollTo(TreeCtrl1_Item2);
+	TreeCtrl1->SetItemText(TreeCtrl1_Item1, m_name);
+	BoxSizer1->Add(TreeCtrl1, 0, wxRIGHT|wxEXPAND, 5);
+
 	Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
 	Panel1->Hide();
+	sizer->Add(Panel1, 1, wxEXPAND, 5);
 	BoxSizer2 = new wxBoxSizer(wxVERTICAL);
 	BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
 	Button1 = new wxButton(Panel1, ID_BUTTON1, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	BoxSizer3->Add(Button1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 	BoxSizer2->Add(BoxSizer3, 0, wxEXPAND, 5);
+	ListCtrl1 = new wxListCtrl(Panel1, ID_LISTCTRL1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES, wxDefaultValidator, _T("ID_LISTCTRL1"));
+	BoxSizer2->Add(ListCtrl1, 1, wxEXPAND, 5);
 	Panel1->SetSizer(BoxSizer2);
 	BoxSizer2->Fit(Panel1);
 	BoxSizer2->SetSizeHints(Panel1);
-	sizer->Add(Panel1, 1, wxEXPAND, 5);
 
 	ImageList = new wxImageList(22, 22, 1);
 	ImageList->Add(wxBitmap(inno_xpm));
@@ -111,6 +126,8 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, const wxStri
 	ImageList->Add(wxBitmap(uninstall_del_xpm));
 	ImageList->Add(wxBitmap(steps_xpm));
 
+
+	Connect(ID_BUILD,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&InnoEditor::OnbuildClick);
 	// Set the images for TreeCtrl1.
 	TreeCtrl1->SetImageList(ImageList);
 	TreeCtrl1->SetItemImage(TreeCtrl1_Item1, 0, wxTreeItemIcon_Normal);
@@ -135,13 +152,13 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, const wxStri
 	TreeCtrl1->SetItemImage(TreeCtrl1_Item20, 18, wxTreeItemIcon_Normal);
 	Connect(ID_TREECTRL1,wxEVT_COMMAND_TREE_ITEM_ACTIVATED,(wxObjectEventFunction)&InnoEditor::OnTreeCtrl1ItemActivated);
 	//*)
-	TreeCtrl1->SetItemText(TreeCtrl1_Item1, m_name);
 
 	sizer->SetOrientation(wxHORIZONTAL);
-	sizer->Insert(0, TreeCtrl1, 0, wxRIGHT|wxEXPAND, 5);
+	sizer->Insert(0, BoxSizer1, 0, wxRIGHT|wxEXPAND, 5);
 	sizer->Layout();
 	Layout();
 	Thaw();
+	readfile(filename);
 }
 
 InnoEditor::~InnoEditor()
@@ -150,6 +167,141 @@ InnoEditor::~InnoEditor()
 	//*)
 }
 
+void InnoEditor::readfile(const wxString& filename)
+{
+
+	wxTextFile file;
+	file.Open(filename);
+
+	wxString content = file.GetFirstLine();
+	int line = 0;
+	analize(content, wxString::Format(_T("%d"), ++line));
+	while( !file.Eof())
+	{
+		content = file.GetNextLine();
+		analize(content, wxString::Format(_T("%d"), ++line));
+	}
+	file.Close();
+
+	inno_part = SCRIPT;
+}
+
+void InnoEditor::analize(const wxString& content, const wxString& line)
+{
+	wxString cont = content.BeforeFirst(';');
+  cont = cont.Trim();
+  if( !content.empty() && !cont.empty())
+  {
+    if( content.StartsWith(_T("#"), &cont))
+    {
+      analize_preprocessor(cont);
+    }
+    else if(content.StartsWith(_T("["), &cont))
+    {
+      cont = cont.BeforeLast(']');
+      analize_section(cont, line);
+    }
+    else
+    {
+      if( inno_part == FILES)
+      {
+        CFiles file;
+				file.Analize(content, line);
+				m_Files.push_back(file);
+      }
+    }
+  }
+  else if( !content.empty())
+  {
+  	if( inno_part == FILES)
+		{
+			CFiles comment;
+			comment.SetLinenumber(line);
+			comment.SetComment(content);
+			m_Files.push_back(comment);
+		}
+  }
+}
+
+void InnoEditor::analize_preprocessor(const wxString& content)
+{
+	wxString con;
+	if( content.StartsWith(_T("include"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("define"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("undef"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("file"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("emit"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("expr"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("insert"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("append"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("for"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("pragma"), &con))
+	{
+	}
+	else if( content.StartsWith(_T("error"), &con))
+	{
+	}
+}
+
+void InnoEditor::analize_section(const wxString& content, const wxString& line)
+{
+	if( content.CmpNoCase(_T("setup")) == 0)
+		inno_part = SETUP;
+	else if( content.CmpNoCase(_T("types")) == 0)
+		inno_part = TYPES;
+	else if( content.CmpNoCase(_T("components")) == 0)
+		inno_part = COMPONENTS;
+	else if( content.CmpNoCase(_T("tasks")) == 0)
+		inno_part = TASKS;
+	else if( content.CmpNoCase(_T("dirs")) == 0)
+		inno_part = FOLDERS;
+	else if( content.CmpNoCase(_T("files")) == 0)
+		inno_part = FILES;
+	else if( content.CmpNoCase(_T("icons")) == 0)
+		inno_part = ICONS;
+	else if( content.CmpNoCase(_T("ini")) == 0)
+		inno_part = INI;
+	else if( content.CmpNoCase(_T("installdelete")) == 0)
+		inno_part = INSTALLDEL;
+	else if( content.CmpNoCase(_T("languages")) == 0)
+		inno_part = LANGUAGES;
+	else if( content.CmpNoCase(_T("messages")) == 0)
+		inno_part = MESSAGES;
+	else if( content.CmpNoCase(_T("custommessages")) == 0)
+		inno_part = CMESSAGES;
+	else if( content.CmpNoCase(_T("langoptions")) == 0)
+		inno_part = LANGOPT;
+	else if( content.CmpNoCase(_T("registry")) == 0)
+		inno_part = REGISTRY;
+	else if( content.CmpNoCase(_T("run")) == 0)
+		inno_part = RUN;
+	else if( content.CmpNoCase(_T("uninstalldelete")) == 0)
+		inno_part = UNINSTALLDEL;
+	else if( content.CmpNoCase(_T("uninstallrun")) == 0)
+		inno_part = UNINSTALL;
+	else if( content.CmpNoCase(_T("code")) == 0)
+		inno_part = PASCALCODE;
+	else
+		inno_part = SCRIPT;
+}
 
 void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 {
@@ -157,9 +309,9 @@ void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 	if( activated.compare(_T("Script")) == 0
 	 || activated.compare(m_name) == 0)
 	{
-		if( !m_script)
+		if( inno_part != SCRIPT)
 		{
-			m_script = true;
+			inno_part = SCRIPT;
 			Panel1->Show(false);
 			GetLeftSplitViewControl()->Show(true);
 			GetLeftSplitViewControl()->SetFocus();
@@ -172,13 +324,96 @@ void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 	}
 	else
 	{
-		if( m_script)
+		ListCtrl1->ClearAll();
+
+		if( inno_part == SCRIPT)
 		{
-			m_script = false;
 			m_line = GetLeftSplitViewControl()->GetCurrentLine();
 			GetLeftSplitViewControl()->Show(false);
 			Panel1->Show(true);
 			Layout();
 		}
+
+		if( activated.compare(_T("Files")) == 0)
+		{
+			inno_part = FILES;
+			CFiles::AddHeader(ListCtrl1);
+			for( CFiles file : m_Files)
+			{
+				file.AddContent(ListCtrl1);
+			}
+		}
+		else if( activated.compare(_T("Folders")) == 0)
+		{
+			inno_part = FOLDERS;
+		}
+		else if( activated.compare(_T("Icons")) == 0)
+		{
+			inno_part = ICONS;
+		}
+		else if( activated.compare(_T("Ini")) == 0)
+		{
+			inno_part = INI;
+		}
+		else if( activated.compare(_T("Tasks")) == 0)
+		{
+			inno_part = TASKS;
+		}
+		else if( activated.compare(_T("Registry")) == 0)
+		{
+			inno_part = REGISTRY;
+		}
+		else if( activated.compare(_T("Language")) == 0)
+		{
+			inno_part = LANGUAGES;
+		}
+		else if( activated.compare(_T("Types")) == 0)
+		{
+			inno_part = TYPES;
+		}
+		else if( activated.compare(_T("Components")) == 0)
+		{
+			inno_part = COMPONENTS;
+		}
+		else if( activated.compare(_T("Messages")) == 0)
+		{
+			inno_part = MESSAGES;
+		}
+		else if( activated.compare(_T("Custom Messages")) == 0)
+		{
+			inno_part = CMESSAGES;
+		}
+		else if( activated.compare(_T("Pascal Code")) == 0)
+		{
+			inno_part = PASCALCODE;
+		}
+		else if( activated.compare(_T("Install Run")) == 0)
+		{
+			inno_part = INSTALL;
+		}
+		else if( activated.compare(_T("Install Delete")) == 0)
+		{
+			inno_part = INSTALLDEL;
+		}
+		else if( activated.compare(_T("Uninstall Run")) == 0)
+		{
+			inno_part = UNINSTALL;
+		}
+		else if( activated.compare(_T("Uninstall Delete")) == 0)
+		{
+			inno_part = UNINSTALLDEL;
+		}
+		else if( activated.compare(_T("Pre Compilation Steps")) == 0)
+		{
+			inno_part = PRE;
+		}
+		else if( activated.compare(_T("Post Compilation Steps")) == 0)
+		{
+			inno_part = POST;
+		}
 	}
+}
+
+void InnoEditor::OnbuildClick(wxCommandEvent& event)
+{
 }

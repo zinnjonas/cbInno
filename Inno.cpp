@@ -140,8 +140,7 @@ bool Inno::CanHandleFile(const wxString& filename) const
 int Inno::OpenFile(const wxString& filename)
 {
 
-  CEditor* editor = new CEditor(filename);
-  m_editors.insert(editor);
+  new CEditor(filename);
   return 0;
 }
 

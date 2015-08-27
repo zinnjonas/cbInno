@@ -74,10 +74,16 @@
 		<Unit filename="ApplicationIcons.h" />
 		<Unit filename="ApplicationInformation.cpp" />
 		<Unit filename="ApplicationInformation.h" />
+		<Unit filename="Comment.cpp" />
+		<Unit filename="Comment.h" />
+		<Unit filename="Common.cpp" />
+		<Unit filename="Common.h" />
 		<Unit filename="CompilerSettings.cpp" />
 		<Unit filename="CompilerSettings.h" />
 		<Unit filename="Components.cpp" />
 		<Unit filename="Components.h" />
+		<Unit filename="Comptask.cpp" />
+		<Unit filename="Comptask.h" />
 		<Unit filename="CreateDialog.cpp" />
 		<Unit filename="CreateDialog.h" />
 		<Unit filename="CustomMessages.cpp" />
@@ -115,8 +121,6 @@
 		<Unit filename="Inno.iss" />
 		<Unit filename="InnoEditor.cpp" />
 		<Unit filename="InnoEditor.h" />
-		<Unit filename="InnoEditorBase.cpp" />
-		<Unit filename="InnoEditorBase.h" />
 		<Unit filename="InnoSettings.cpp" />
 		<Unit filename="InnoSettings.h" />
 		<Unit filename="Languages.cpp" />
@@ -125,6 +129,8 @@
 		<Unit filename="Registry.h" />
 		<Unit filename="Run.cpp" />
 		<Unit filename="Run.h" />
+		<Unit filename="Section.cpp" />
+		<Unit filename="Section.h" />
 		<Unit filename="Setup.cpp" />
 		<Unit filename="Setup.h" />
 		<Unit filename="SetupLanguages.cpp" />

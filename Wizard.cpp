@@ -414,8 +414,6 @@ void MyStandartWizard::OnWizardFinish( wxWizardEvent& event)
     if( !Page6->txtAfter->IsEmpty())
       InnoFile.Setup.SetInfoAfter( Page6->txtAfter->GetValue());
 
-    bool lang_selected = false;
-
     for( unsigned int i = 0; i < Page7->lbLanguages->GetCount(); i++)
     {
       CLanguages Dummy;

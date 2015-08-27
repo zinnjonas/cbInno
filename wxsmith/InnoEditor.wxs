@@ -3,68 +3,85 @@
 	<object class="wxPanel" name="InnoEditor">
 		<pos_arg>1</pos_arg>
 		<size_arg>1</size_arg>
-		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
+		<object class="wxBoxSizer" variable="B" member="no">
 			<object class="sizeritem">
-				<object class="wxTreeCtrl" name="ID_TREECTRL1" variable="TreeCtrl1" member="yes">
-					<image_list>ImageList</image_list>
-					<tree_items>
-						<item>TreeCtrl1</item>
-						<item>ImageList</item>
-						<item>0,#000000,0,0,-1,-1,-1,root</item>
-						<item>1,#000000,0,1,-1,-1,-1,Script</item>
-						<item>1,#000000,0,2,-1,-1,-1,Files</item>
-						<item>1,#000000,0,3,-1,-1,-1,Folders</item>
-						<item>1,#000000,0,4,-1,-1,-1,Icons</item>
-						<item>1,#000000,0,5,-1,-1,-1,Ini</item>
-						<item>1,#000000,0,6,-1,-1,-1,Tasks</item>
-						<item>1,#000000,0,7,-1,-1,-1,Registry</item>
-						<item>1,#000000,0,8,-1,-1,-1,Language</item>
-						<item>1,#000000,0,9,-1,-1,-1,Types</item>
-						<item>1,#000000,0,10,-1,-1,-1,Components</item>
-						<item>1,#000000,0,11,-1,-1,-1,Messages</item>
-						<item>1,#000000,0,12,-1,-1,-1,Custom Messages</item>
-						<item>1,#000000,0,13,-1,-1,-1,Pascal Code</item>
-						<item>1,#000000,0,14,-1,-1,-1,Install Run</item>
-						<item>1,#000000,0,15,-1,-1,-1,Install Delete</item>
-						<item>1,#000000,0,16,-1,-1,-1,Uninstall Run</item>
-						<item>1,#000000,0,17,-1,-1,-1,Uninstall Delete</item>
-						<item>1,#000000,0,18,-1,-1,-1,Pre Compilation Steps</item>
-						<item>1,#000000,0,18,-1,-1,-1,Post Compilation Steps</item>
-					</tree_items>
-					<items_text>
-						<item2>TreeCtrl1</item2>
-						<item2>ImageList</item2>
-						<item2>0,#000000,0,0,-1,-1,-1,root</item2>
-						<item2>1,#000000,0,1,-1,-1,-1,Script</item2>
-						<item2>1,#000000,0,2,-1,-1,-1,Files</item2>
-						<item2>1,#000000,0,3,-1,-1,-1,Folders</item2>
-						<item2>1,#000000,0,4,-1,-1,-1,Icons</item2>
-						<item2>1,#000000,0,5,-1,-1,-1,Ini</item2>
-						<item2>1,#000000,0,6,-1,-1,-1,Tasks</item2>
-						<item2>1,#000000,0,7,-1,-1,-1,Registry</item2>
-						<item2>1,#000000,0,8,-1,-1,-1,Language</item2>
-						<item2>1,#000000,0,9,-1,-1,-1,Types</item2>
-						<item2>1,#000000,0,10,-1,-1,-1,Components</item2>
-						<item2>1,#000000,0,11,-1,-1,-1,Messages</item2>
-						<item2>1,#000000,0,12,-1,-1,-1,Custom Messages</item2>
-						<item2>1,#000000,0,13,-1,-1,-1,Pascal Code</item2>
-						<item2>1,#000000,0,14,-1,-1,-1,Install Run</item2>
-						<item2>1,#000000,0,15,-1,-1,-1,Install Delete</item2>
-						<item2>1,#000000,0,16,-1,-1,-1,Uninstall Run</item2>
-						<item2>1,#000000,0,17,-1,-1,-1,Uninstall Delete</item2>
-						<item2>1,#000000,0,18,-1,-1,-1,Pre Compilation Steps</item2>
-						<item2>1,#000000,0,18,-1,-1,-1,Post Compilation Steps</item2>
-					</items_text>
-					<size>205,460</size>
-					<style>0</style>
-					<handler function="OnTreeCtrl1ItemActivated" entry="EVT_TREE_ITEM_ACTIVATED" />
+				<object class="wxBoxSizer" variable="BoxSizer1" member="no">
+					<orient>wxVERTICAL</orient>
+					<object class="sizeritem">
+						<object class="wxButton" name="ID_BUILD" variable="m_build" member="yes">
+							<label>Build</label>
+							<handler function="OnbuildClick" entry="EVT_BUTTON" />
+						</object>
+						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL</flag>
+						<border>5</border>
+					</object>
+					<object class="sizeritem">
+						<object class="wxTreeCtrl" name="ID_TREECTRL1" variable="TreeCtrl1" member="yes">
+							<image_list>ImageList</image_list>
+							<tree_items>
+								<item>TreeCtrl1</item>
+								<item>ImageList</item>
+								<item>0,#000000,0,0,-1,-1,-1,root</item>
+								<item>1,#000000,0,1,-1,-1,-1,Script</item>
+								<item>1,#000000,0,2,-1,-1,-1,Files</item>
+								<item>1,#000000,0,3,-1,-1,-1,Folders</item>
+								<item>1,#000000,0,4,-1,-1,-1,Icons</item>
+								<item>1,#000000,0,5,-1,-1,-1,Ini</item>
+								<item>1,#000000,0,6,-1,-1,-1,Tasks</item>
+								<item>1,#000000,0,7,-1,-1,-1,Registry</item>
+								<item>1,#000000,0,8,-1,-1,-1,Language</item>
+								<item>1,#000000,0,9,-1,-1,-1,Types</item>
+								<item>1,#000000,0,10,-1,-1,-1,Components</item>
+								<item>1,#000000,0,11,-1,-1,-1,Messages</item>
+								<item>1,#000000,0,12,-1,-1,-1,Custom Messages</item>
+								<item>1,#000000,0,13,-1,-1,-1,Pascal Code</item>
+								<item>1,#000000,0,14,-1,-1,-1,Install Run</item>
+								<item>1,#000000,0,15,-1,-1,-1,Install Delete</item>
+								<item>1,#000000,0,16,-1,-1,-1,Uninstall Run</item>
+								<item>1,#000000,0,17,-1,-1,-1,Uninstall Delete</item>
+								<item>1,#000000,0,18,-1,-1,-1,Pre Compilation Steps</item>
+								<item>1,#000000,0,18,-1,-1,-1,Post Compilation Steps</item>
+							</tree_items>
+							<items_text>
+								<item2>TreeCtrl1</item2>
+								<item2>ImageList</item2>
+								<item2>0,#000000,0,0,-1,-1,-1,root</item2>
+								<item2>1,#000000,0,1,-1,-1,-1,Script</item2>
+								<item2>1,#000000,0,2,-1,-1,-1,Files</item2>
+								<item2>1,#000000,0,3,-1,-1,-1,Folders</item2>
+								<item2>1,#000000,0,4,-1,-1,-1,Icons</item2>
+								<item2>1,#000000,0,5,-1,-1,-1,Ini</item2>
+								<item2>1,#000000,0,6,-1,-1,-1,Tasks</item2>
+								<item2>1,#000000,0,7,-1,-1,-1,Registry</item2>
+								<item2>1,#000000,0,8,-1,-1,-1,Language</item2>
+								<item2>1,#000000,0,9,-1,-1,-1,Types</item2>
+								<item2>1,#000000,0,10,-1,-1,-1,Components</item2>
+								<item2>1,#000000,0,11,-1,-1,-1,Messages</item2>
+								<item2>1,#000000,0,12,-1,-1,-1,Custom Messages</item2>
+								<item2>1,#000000,0,13,-1,-1,-1,Pascal Code</item2>
+								<item2>1,#000000,0,14,-1,-1,-1,Install Run</item2>
+								<item2>1,#000000,0,15,-1,-1,-1,Install Delete</item2>
+								<item2>1,#000000,0,16,-1,-1,-1,Uninstall Run</item2>
+								<item2>1,#000000,0,17,-1,-1,-1,Uninstall Delete</item2>
+								<item2>1,#000000,0,18,-1,-1,-1,Pre Compilation Steps</item2>
+								<item2>1,#000000,0,18,-1,-1,-1,Post Compilation Steps</item2>
+							</items_text>
+							<size>205,460</size>
+							<extra_code>$(THIS)-&gt;SetItemText(TreeCtrl1__Item1, m__name);</extra_code>
+							<style>0</style>
+							<handler function="OnTreeCtrl1ItemActivated" entry="EVT_TREE_ITEM_ACTIVATED" />
+						</object>
+						<flag>wxRIGHT|wxEXPAND</flag>
+						<border>5</border>
+					</object>
 				</object>
-				<flag>wxRIGHT|wxEXPAND</flag>
+				<flag>wxEXPAND</flag>
 				<border>5</border>
 			</object>
 			<object class="sizeritem">
 				<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
 					<hidden>1</hidden>
+					<extra_code>sizer-&gt;Add($(THIS), 1, wxEXPAND, 5);</extra_code>
 					<object class="wxBoxSizer" variable="BoxSizer2" member="no">
 						<orient>wxVERTICAL</orient>
 						<object class="sizeritem">
@@ -79,6 +96,14 @@
 							</object>
 							<flag>wxEXPAND</flag>
 							<border>5</border>
+						</object>
+						<object class="sizeritem">
+							<object class="wxListCtrl" name="ID_LISTCTRL1" variable="ListCtrl1" member="yes">
+								<style>wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES</style>
+							</object>
+							<flag>wxEXPAND</flag>
+							<border>5</border>
+							<option>1</option>
 						</object>
 					</object>
 				</object>
