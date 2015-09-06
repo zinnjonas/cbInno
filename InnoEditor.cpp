@@ -71,7 +71,7 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, int log)
 
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
 	m_build = new wxBitmapButton(this, ID_BUILDBUTTON, wxBitmap(run_xpm), wxDefaultPosition, wxSize(25,25), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BUILDBUTTON"));
-	BoxSizer1->Add(m_build, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
+	BoxSizer1->Add(m_build, 1, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
 	TreeCtrl1 = new wxTreeCtrl(this, ID_TREECTRL1, wxDefaultPosition, wxSize(205,460), 0, wxDefaultValidator, _T("ID_TREECTRL1"));
 	wxTreeItemId TreeCtrl1_Item1 = TreeCtrl1->AddRoot(_T("root"));
 	wxTreeItemId TreeCtrl1_Item2 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Script"));
@@ -91,8 +91,6 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, int log)
 	wxTreeItemId TreeCtrl1_Item16 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Install Delete"));
 	wxTreeItemId TreeCtrl1_Item17 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Uninstall Run"));
 	wxTreeItemId TreeCtrl1_Item18 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Uninstall Delete"));
-	wxTreeItemId TreeCtrl1_Item19 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Pre Compilation Steps"));
-	wxTreeItemId TreeCtrl1_Item20 = TreeCtrl1->AppendItem(TreeCtrl1_Item1, _T("Post Compilation Steps"));
 	TreeCtrl1->ScrollTo(TreeCtrl1_Item2);
 	TreeCtrl1->SetItemText(TreeCtrl1_Item1, m_name);
 	BoxSizer1->Add(TreeCtrl1, 0, wxRIGHT|wxEXPAND, 5);
@@ -154,8 +152,6 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, int log)
 	TreeCtrl1->SetItemImage(TreeCtrl1_Item16, 15, wxTreeItemIcon_Normal);
 	TreeCtrl1->SetItemImage(TreeCtrl1_Item17, 16, wxTreeItemIcon_Normal);
 	TreeCtrl1->SetItemImage(TreeCtrl1_Item18, 17, wxTreeItemIcon_Normal);
-	TreeCtrl1->SetItemImage(TreeCtrl1_Item19, 18, wxTreeItemIcon_Normal);
-	TreeCtrl1->SetItemImage(TreeCtrl1_Item20, 18, wxTreeItemIcon_Normal);
 	Connect(ID_TREECTRL1,wxEVT_COMMAND_TREE_ITEM_ACTIVATED,(wxObjectEventFunction)&InnoEditor::OnTreeCtrl1ItemActivated);
 	//*)
 

@@ -41,8 +41,6 @@
 								<item>1,#000000,0,15,-1,-1,-1,Install Delete</item>
 								<item>1,#000000,0,16,-1,-1,-1,Uninstall Run</item>
 								<item>1,#000000,0,17,-1,-1,-1,Uninstall Delete</item>
-								<item>1,#000000,0,18,-1,-1,-1,Pre Compilation Steps</item>
-								<item>1,#000000,0,18,-1,-1,-1,Post Compilation Steps</item>
 							</tree_items>
 							<items_text>
 								<item2>TreeCtrl1</item2>
@@ -65,8 +63,6 @@
 								<item2>1,#000000,0,15,-1,-1,-1,Install Delete</item2>
 								<item2>1,#000000,0,16,-1,-1,-1,Uninstall Run</item2>
 								<item2>1,#000000,0,17,-1,-1,-1,Uninstall Delete</item2>
-								<item2>1,#000000,0,18,-1,-1,-1,Pre Compilation Steps</item2>
-								<item2>1,#000000,0,18,-1,-1,-1,Post Compilation Steps</item2>
 							</items_text>
 							<size>205,460</size>
 							<extra_code>$(THIS)-&gt;SetItemText(TreeCtrl1__Item1, m__name);</extra_code>
