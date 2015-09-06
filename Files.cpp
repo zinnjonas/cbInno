@@ -12,7 +12,7 @@ int CFiles::m_index_font = 0;
 int CFiles::m_index_strong = 0;
 int CFiles::m_index_flags = 0;
 
-const wxString CFiles::FileFlags[] =
+const wxString CFiles::Flags[] =
 {
   _T("32bit"),
   _T("64bit"),
@@ -153,10 +153,6 @@ void CFiles::WriteInFile( wxTextFile* File)
     CCommon::AddText(Text);
     File->AddLine( Text);
   }
-  else if( IsComment())
-  {
-    File->AddLine(GetComment());
-  }
 }
 
 wxString CFiles::GetFileName( void)
@@ -228,34 +224,26 @@ void CFiles::Analize(const wxString& content, const wxString& line)
 	}
 }
 
-void CFiles::AddContent(wxListCtrl* liste)
+void CFiles::FillContent(wxListCtrl* liste)
 {
-  CSection::AddContent(liste);
-  if( IsComment())
-  {
-    CComment::AddContent(liste, GetIndex());
-  }
-  else
-  {
-    liste->SetItem(GetIndex(), m_index_src, m_Source);
-    liste->SetItem(GetIndex(), m_index_dest_dir, m_DestDir);
-    liste->SetItem(GetIndex(), m_index_dest_name, m_DestName);
-    liste->SetItem(GetIndex(), m_index_exc, m_Excludes);
-    liste->SetItem(GetIndex(), m_index_extern, m_ExternalSize);
-    liste->SetItem(GetIndex(), m_index_copy, m_CopyMode);
-    liste->SetItem(GetIndex(), m_index_attr, m_Attribs);
-    liste->SetItem(GetIndex(), m_index_perm, m_Permissions);
-    liste->SetItem(GetIndex(), m_index_font, m_FontInstall);
-    liste->SetItem(GetIndex(), m_index_strong, m_StrongAssemblyName);
-    liste->SetItem(GetIndex(), m_index_flags, m_Flags);
-    CCompTask::AddContent(liste, GetIndex());
-    CCommon::AddContent(liste, GetIndex());
-  }
+  liste->SetItem(GetIndex(), m_index_src, m_Source);
+  liste->SetItem(GetIndex(), m_index_dest_dir, m_DestDir);
+  liste->SetItem(GetIndex(), m_index_dest_name, m_DestName);
+  liste->SetItem(GetIndex(), m_index_exc, m_Excludes);
+  liste->SetItem(GetIndex(), m_index_extern, m_ExternalSize);
+  liste->SetItem(GetIndex(), m_index_copy, m_CopyMode);
+  liste->SetItem(GetIndex(), m_index_attr, m_Attribs);
+  liste->SetItem(GetIndex(), m_index_perm, m_Permissions);
+  liste->SetItem(GetIndex(), m_index_font, m_FontInstall);
+  liste->SetItem(GetIndex(), m_index_strong, m_StrongAssemblyName);
+  liste->SetItem(GetIndex(), m_index_flags, m_Flags);
+  CCompTask::FillContent(liste, GetIndex());
+  CCommon::FillContent(liste, GetIndex());
 }
 
 void CFiles::AddHeader(wxListCtrl* liste)
 {
-  CSection::AddHeader(liste);
+  InsertHeader(liste);
   m_index_src       = liste->InsertColumn(liste->GetColumnCount(), _T("Source"));
   m_index_dest_dir  = liste->InsertColumn(liste->GetColumnCount(), _T("DestDir"));
   m_index_dest_name = liste->InsertColumn(liste->GetColumnCount(), _T("DestName"));

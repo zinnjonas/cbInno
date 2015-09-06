@@ -4,8 +4,9 @@
 #include "Section.h"
 #include <wx/string.h>
 #include <wx/listctrl.h>
+#include <wx/textfile.h>
 
-class CComment
+class CComment : public CSection
 {
   public:
     /** Default constructor */
@@ -22,7 +23,14 @@ class CComment
      */
     void SetComment(wxString val) { m_Comment = val; }
 
-    void AddContent(wxListCtrl* liste, int index);
+    void AddContent(wxListCtrl* liste);
+
+    virtual void FillContent(wxListCtrl* liste)=0;
+
+    void Write(wxTextFile* File);
+
+    virtual void WriteInFile( wxTextFile* File)=0;
+
 
   protected:
   private:

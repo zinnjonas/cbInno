@@ -40,7 +40,7 @@ class CCompTask
 
     bool Analize( const wxString& part, const wxString& settings);
 
-    void AddContent(wxListCtrl* liste, int index);
+    void FillContent(wxListCtrl* liste, int index);
 
     static void AddHeader(wxListCtrl* liste);
 

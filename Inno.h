@@ -1,3 +1,6 @@
+#ifndef HEADER_16EEB930D317B454
+#define HEADER_16EEB930D317B454
+
 /***************************************************************
  * Name:      Inno
  * Purpose:   Code::Blocks plugin
@@ -23,18 +26,7 @@
 #include <loggers.h>
 #include <set>
 #include "Editor.h"
-
-class Consume : public wxThread
-{
-  public:
-    Consume(wxInputStream* out,TextCtrlLogger* logger);
-
-  protected:
-
-    virtual ExitCode Entry();
-    wxInputStream* m_out;
-    TextCtrlLogger* m_logger;
-};
+#include "Consume.h"
 
 class Inno : public cbMimePlugin
 {
@@ -129,7 +121,6 @@ class Inno : public cbMimePlugin
     wxString iss_name;
     wxInputStream* m_out;
     wxInputStream* m_err;
-    TextCtrlLogger* m_logger;
     int m_log_pos;
     bool m_running;
     Consume* m_consume;
@@ -139,3 +130,5 @@ class Inno : public cbMimePlugin
 };
 
 #endif // INNO_H_INCLUDED
+#endif // header guard
+

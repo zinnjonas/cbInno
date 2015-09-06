@@ -25,7 +25,7 @@
 #include "Run.h"
 #include "Setup.h"
 #include "Types.h"
-#include "UninstallDelte.h"
+#include "UninstallDelete.h"
 #include "Tasks.h"
 
 #include <wx/dynarray.h>
@@ -36,7 +36,7 @@ WX_DECLARE_OBJARRAY(CTasks,         ArraySetupTask);
 WX_DECLARE_OBJARRAY(CIcons,         ArraySetupIcon);
 WX_DECLARE_OBJARRAY(CRun,           ArraySetupRun);
 WX_DECLARE_OBJARRAY(CRegistry,      ArraySetupRegistry);
-WX_DECLARE_OBJARRAY(CUninstallDelte,ArraySetupUninstall);
+WX_DECLARE_OBJARRAY(CUninstallDelete,ArraySetupUninstall);
 WX_DECLARE_OBJARRAY(CComponents,    ArraySetupComponent);
 WX_DECLARE_OBJARRAY(CCustomMessages,ArraySetupCustom);
 WX_DECLARE_OBJARRAY(CTypes,         ArraySetupType);

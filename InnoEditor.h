@@ -12,6 +12,7 @@
 #include <wx/treectrl.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
+#include <wx/bmpbuttn.h>
 #include <wx/imaglist.h>
 #include <wx/button.h>
 //*)
@@ -19,62 +20,37 @@
 #include <wx/icon.h>
 #include <list>
 #include <cbstyledtextctrl.h>
+#include <wx/process.h>
 
-#include "Files.h"
-#include "Comment.h"
-
-enum InnoPart
-{
-	SETUP,
-	SCRIPT,
-	FILES,
-	FOLDERS,
-	ICONS,
-	INI,
-	TASKS,
-	REGISTRY,
-	LANGUAGES,
-	LANGOPT,
-	TYPES,
-	COMPONENTS,
-	MESSAGES,
-	CMESSAGES,
-	RUN,
-	PASCALCODE,
-	INSTALL,
-	INSTALLDEL,
-	UNINSTALL,
-	UNINSTALLDEL,
-	PRE,
-	POST
-};
+#include "InnoScript.h"
+#include "Consume.h"
 
 class InnoEditor: public cbEditor
 {
 	public:
 
-		InnoEditor( wxWindow* parent, const wxString& filename);
+		InnoEditor( wxWindow* parent, const wxString& filename, int log);
 		virtual ~InnoEditor();
 
-		void readfile(const wxString& filename);
-		void analize(const wxString& content, const wxString& line);
-
-		void analize_preprocessor( const wxString& content);
-		void analize_section( const wxString& content, const wxString& line);
+		void UpdateView();
 
 		//(*Declarations(InnoEditor)
 		wxListCtrl* ListCtrl1;
 		wxButton* Button1;
 		wxImageList* ImageList;
 		wxPanel* Panel1;
-		wxButton* m_build;
+		wxBitmapButton* m_build;
 		wxTreeCtrl* TreeCtrl1;
 		//*)
+
+		bool Save();
+
+		void OnProcessEnd(cb_unused wxProcessEvent& evt);
 
 	protected:
 
 		//(*Identifiers(InnoEditor)
-		static const long ID_BUILD;
+		static const long ID_BUILDBUTTON;
 		static const long ID_TREECTRL1;
 		static const long ID_BUTTON1;
 		static const long ID_LISTCTRL1;
@@ -88,11 +64,19 @@ class InnoEditor: public cbEditor
 		void OnbuildClick(wxCommandEvent& event);
 		//*)
 
+		int m_log_pos;
+
 		wxString m_name;
 
-    int  m_line;
+    wxString m_file;
     InnoPart inno_part;
-    std::list<CFiles> m_Files;
+    InnoScript m_script;
+    bool m_running;
+    wxInputStream* m_out;
+    wxInputStream* m_err;
+    Consume* m_consume;
+
+    wxString m_content;
 
 		DECLARE_EVENT_TABLE()
 };

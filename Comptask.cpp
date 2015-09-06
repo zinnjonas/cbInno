@@ -36,7 +36,7 @@ bool CCompTask::Analize(const wxString& part, const wxString& settings)
   return false;
 }
 
-void CCompTask::AddContent(wxListCtrl* liste, int index)
+void CCompTask::FillContent(wxListCtrl* liste, int index)
 {
   liste->SetItem(index, m_index_tasks, m_Tasks);
   liste->SetItem(index, m_index_comp, m_Components);

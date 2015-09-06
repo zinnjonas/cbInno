@@ -87,7 +87,7 @@ bool CCommon::Analize(const wxString& part, const wxString& settings)
   return false;
 }
 
-void CCommon::AddContent(wxListCtrl* liste, int index)
+void CCommon::FillContent(wxListCtrl* liste, int index)
 {
   liste->SetItem(index, m_index_lang, m_Languages);
   liste->SetItem(index, m_index_min, m_MinVersion);

@@ -15,12 +15,12 @@ int CSection::GetIndex()
   return m_index;
 }
 
-void CSection::AddContent(wxListCtrl* liste)
+void CSection::InsertContent(wxListCtrl* liste)
 {
   m_index = liste->InsertItem(liste->GetItemCount(), m_Linenumber);
 }
 
-void CSection::AddHeader(wxListCtrl* liste)
+void CSection::InsertHeader(wxListCtrl* liste)
 {
   liste->InsertColumn(liste->GetColumnCount(), _T("Line"));
 }

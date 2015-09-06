@@ -14,7 +14,7 @@ class CEditor
   public:
 
     CEditor();
-    CEditor(const wxString& file);
+    CEditor(const wxString& file, int log);
     virtual ~CEditor();
 
   protected:

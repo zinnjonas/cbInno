@@ -1,22 +1,30 @@
 #ifndef CTASKS_H
 #define CTASKS_H
 
-#include <wx/textfile.h>
+#include "Comment.h"
+#include "Common.h"
 
-class CTasks
+class CTasks : public CComment, public CCommon
 {
   public:
     CTasks( void);
     virtual ~CTasks();
-
-    void WriteInFile( wxTextFile* File);
 
     void SetName(wxString val);
     void SetDescription(wxString val);
     void SetGroupDescription(wxString val);
     void SetComponents( wxString val);
     void SetFlags( wxString val);
-    void SetOnlyBelowVersion( wxString val);
+
+    static const wxString Flags[];
+
+    void WriteInFile( wxTextFile* File);
+
+    void Analize( const wxString& content, const wxString& line);
+
+    void FillContent(wxListCtrl* liste);
+
+    static void AddHeader(wxListCtrl* liste);
 
   protected:
 
@@ -25,7 +33,12 @@ class CTasks
     wxString m_GroupDescription;
     wxString m_Components;
     wxString m_Flags;
-    wxString m_OnlyBelowVersion;
+
+    static int m_index_name;
+    static int m_index_desc;
+    static int m_index_group;
+    static int m_index_comp;
+    static int m_index_flags;
 };
 
 #endif // CTASKS_H

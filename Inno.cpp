@@ -73,10 +73,9 @@ void Inno::OnAttach()
   // (see: does not need) this plugin...
   if( m_IsAttached)
   {
-    m_logger = new TextCtrlLogger();
-    m_log_pos = Manager::Get()->GetLogManager()->SetLog(m_logger);
+    m_log_pos = Manager::Get()->GetLogManager()->SetLog(new TextCtrlLogger());
     Manager::Get()->GetLogManager()->Slot(m_log_pos).title = L"Inno";
-    CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_logger, Manager::Get()->GetLogManager()->Slot(m_log_pos).title, new wxBitmap(Inno_xpm));
+    CodeBlocksLogEvent evt(cbEVT_ADD_LOG_WINDOW, m_log_pos, Manager::Get()->GetLogManager()->Slot(m_log_pos).title, new wxBitmap(Inno_xpm));
     Manager::Get()->ProcessEvent(evt);
 
     AddFileMasksToProjectManager();
@@ -90,7 +89,7 @@ void Inno::OnRelease(cb_unused bool appShutDown)
   // which means you must not use any of the SDK Managers
   // NOTE: after this function, the inherited member variable
   // m_IsAttached will be FALSE...
-  CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_logger);
+  CodeBlocksLogEvent evt(cbEVT_REMOVE_LOG_WINDOW, m_log_pos);
   Manager::Get()->ProcessEvent(evt);
 }
 
@@ -140,7 +139,7 @@ bool Inno::CanHandleFile(const wxString& filename) const
 int Inno::OpenFile(const wxString& filename)
 {
 
-  new CEditor(filename);
+  new CEditor(filename, m_log_pos);
   return 0;
 }
 
@@ -347,16 +346,16 @@ void Inno::OnInnoBuild(cb_unused wxCommandEvent& event)
     return;
   }
 
-  CodeBlocksLogEvent evt(cbEVT_SWITCH_TO_LOG_WINDOW, m_logger);
+  CodeBlocksLogEvent evt(cbEVT_SWITCH_TO_LOG_WINDOW, m_log_pos);
   Manager::Get()->ProcessEvent(evt);
 
   if( m_consume == nullptr)
   {
-    m_consume = new Consume(m_out, m_logger);
+    m_consume = new Consume(m_out, m_log_pos);
     wxThreadError er = m_consume->Run();
     if( er != wxTHREAD_NO_ERROR)
     {
-      m_logger->Append(wxString::Format(L"Can't create the thread!%d", er));
+      Manager::Get()->GetLogManager()->Log(wxString::Format(L"Can't create the thread!%d", er), m_log_pos);
       delete m_consume;
       m_consume = nullptr;
     }
@@ -373,18 +372,18 @@ void Inno::OnProcessEnd(cb_unused wxProcessEvent& evt)
     {
       if( m_consume->IsRunning())
         if( m_consume->Delete() != wxTHREAD_NO_ERROR)
-          m_logger->Append(L"Error at deleting");
+          Manager::Get()->GetLogManager()->Log(L"Error at deleting", m_log_pos);
     }
     m_consume = nullptr;
 
-    CodeBlocksLogEvent event(cbEVT_SWITCH_TO_LOG_WINDOW, m_logger);
+    CodeBlocksLogEvent event(cbEVT_SWITCH_TO_LOG_WINDOW, m_log_pos);
     Manager::Get()->ProcessEvent(event);
     wxString text;
     while( m_out->CanRead())
     {
       text += m_out->GetC();
     }
-    m_logger->Append(text);
+    Manager::Get()->GetLogManager()->Log(text, m_log_pos);
     wxString err;
     while( m_err->CanRead())
     {
@@ -421,7 +420,7 @@ void Inno::OnProcessEnd(cb_unused wxProcessEvent& evt)
         ed->GotoLine(linenr-1);
         ed->SetErrorLine(linenr-1);
       }
-      m_logger->Append(err, Logger::error);
+      Manager::Get()->GetLogManager()->Log(err, m_log_pos, Logger::error);
 
     }
     else
@@ -429,34 +428,4 @@ void Inno::OnProcessEnd(cb_unused wxProcessEvent& evt)
       Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor()->Activate();
     }
   }
-}
-
-Consume::Consume(wxInputStream* out,TextCtrlLogger* logger) : wxThread(wxTHREAD_DETACHED)
-{
-  m_out = out;
-  m_logger = logger;
-  Create();
-}
-
-wxThread::ExitCode Consume::Entry()
-{
-  while(!TestDestroy())
-  {
-    wxString text;
-    while( m_out->CanRead())
-    {
-      int c = m_out->GetC();
-      if( c == '\n')
-      {
-        m_logger->Append(text);
-        text.clear();
-      }
-      else
-        text += c;
-    }
-    if( !text.empty())
-      m_logger->Append(text);
-  }
-
-  return (ExitCode)0;
 }

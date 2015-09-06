@@ -8,12 +8,14 @@
 				<object class="wxBoxSizer" variable="BoxSizer1" member="no">
 					<orient>wxVERTICAL</orient>
 					<object class="sizeritem">
-						<object class="wxButton" name="ID_BUILD" variable="m_build" member="yes">
-							<label>Build</label>
+						<object class="wxBitmapButton" name="ID_BUILDBUTTON" variable="m_build" member="yes">
+							<bitmap code="wxBitmap(run_xpm)" />
+							<size>25,25</size>
 							<handler function="OnbuildClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALL|wxALIGN_CENTER_HORIZONTAL</flag>
 						<border>5</border>
+						<option>1</option>
 					</object>
 					<object class="sizeritem">
 						<object class="wxTreeCtrl" name="ID_TREECTRL1" variable="TreeCtrl1" member="yes">

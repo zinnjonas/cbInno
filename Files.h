@@ -10,7 +10,7 @@
 #include "Section.h"
 #include "Comment.h"
 
-class CFiles : public CCommon, public CCompTask, public CSection, public CComment
+class CFiles : public CCommon, public CCompTask, public CComment
 {
   public:
     CFiles( void);
@@ -36,11 +36,11 @@ class CFiles : public CCommon, public CCompTask, public CSection, public CCommen
 
     void Analize( const wxString& content, const wxString& line);
 
-    void AddContent(wxListCtrl* liste);
+    void FillContent(wxListCtrl* liste);
 
     static void AddHeader(wxListCtrl* liste);
 
-    static const wxString FileFlags[];
+    static const wxString Flags[];
 
   protected:
 

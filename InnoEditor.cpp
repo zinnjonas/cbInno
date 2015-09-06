@@ -20,6 +20,7 @@
 #include "Images\types.xpm"
 #include "Images\uninstall.xpm"
 #include "Images\uninstall_del.xpm"
+#include "Images\run.xpm"
 //----  --------------------------------------------------------------------------------------------
 
 #include <wx/textfile.h>
@@ -27,27 +28,31 @@
 #include <editormanager.h>
 
 //(*InternalHeaders(InnoEditor)
+#include <wx/bitmap.h>
 #include <wx/intl.h>
+#include <wx/image.h>
 #include <wx/string.h>
 //*)
 
 //(*IdInit(InnoEditor)
-const long InnoEditor::ID_BUILD = wxNewId();
+const long InnoEditor::ID_BUILDBUTTON = wxNewId();
 const long InnoEditor::ID_TREECTRL1 = wxNewId();
 const long InnoEditor::ID_BUTTON1 = wxNewId();
 const long InnoEditor::ID_LISTCTRL1 = wxNewId();
 const long InnoEditor::ID_PANEL1 = wxNewId();
 //*)
+const long ID_EDITOR_THREAD = wxNewId();
 
 BEGIN_EVENT_TABLE(InnoEditor,cbEditor)
 	//(*EventTable(InnoEditor)
 	//*)
+	EVT_END_PROCESS(ID_EDITOR_THREAD, InnoEditor::OnProcessEnd)
 END_EVENT_TABLE()
 
-InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename)
+InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename, int log)
  : cbEditor( parent, Manager::Get()->GetFileManager()->Load(filename), filename,
 						 Manager::Get()->GetEditorManager()->GetColourSet()),
-		inno_part(SCRIPT)
+		m_log_pos(log), inno_part(SCRIPT),m_running(false), m_consume(nullptr)
 {
 
 	wxBoxSizer* sizer = static_cast<wxBoxSizer*>(GetSizer());
@@ -57,6 +62,7 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename)
 	m_name += _T("[.");
 	m_name += file.GetExt();
 	m_name += _T("]");
+	m_file = filename;
 	Freeze();
 	//(*Initialize(InnoEditor)
 	wxBoxSizer* BoxSizer2;
@@ -64,7 +70,7 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename)
 	wxBoxSizer* BoxSizer3;
 
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
-	m_build = new wxButton(this, ID_BUILD, _("Build"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUILD"));
+	m_build = new wxBitmapButton(this, ID_BUILDBUTTON, wxBitmap(run_xpm), wxDefaultPosition, wxSize(25,25), wxBU_AUTODRAW, wxDefaultValidator, _T("ID_BUILDBUTTON"));
 	BoxSizer1->Add(m_build, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
 	TreeCtrl1 = new wxTreeCtrl(this, ID_TREECTRL1, wxDefaultPosition, wxSize(205,460), 0, wxDefaultValidator, _T("ID_TREECTRL1"));
 	wxTreeItemId TreeCtrl1_Item1 = TreeCtrl1->AddRoot(_T("root"));
@@ -127,7 +133,7 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename)
 	ImageList->Add(wxBitmap(steps_xpm));
 
 
-	Connect(ID_BUILD,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&InnoEditor::OnbuildClick);
+	Connect(ID_BUILDBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&InnoEditor::OnbuildClick);
 	// Set the images for TreeCtrl1.
 	TreeCtrl1->SetImageList(ImageList);
 	TreeCtrl1->SetItemImage(TreeCtrl1_Item1, 0, wxTreeItemIcon_Normal);
@@ -158,149 +164,13 @@ InnoEditor::InnoEditor( wxWindow* parent, const wxString& filename)
 	sizer->Layout();
 	Layout();
 	Thaw();
-	readfile(filename);
+	m_script.Read(GetLeftSplitViewControl()->GetText());
 }
 
 InnoEditor::~InnoEditor()
 {
 	//(*Destroy(InnoEditor)
 	//*)
-}
-
-void InnoEditor::readfile(const wxString& filename)
-{
-
-	wxTextFile file;
-	file.Open(filename);
-
-	wxString content = file.GetFirstLine();
-	int line = 0;
-	analize(content, wxString::Format(_T("%d"), ++line));
-	while( !file.Eof())
-	{
-		content = file.GetNextLine();
-		analize(content, wxString::Format(_T("%d"), ++line));
-	}
-	file.Close();
-
-	inno_part = SCRIPT;
-}
-
-void InnoEditor::analize(const wxString& content, const wxString& line)
-{
-	wxString cont = content.BeforeFirst(';');
-  cont = cont.Trim();
-  if( !content.empty() && !cont.empty())
-  {
-    if( content.StartsWith(_T("#"), &cont))
-    {
-      analize_preprocessor(cont);
-    }
-    else if(content.StartsWith(_T("["), &cont))
-    {
-      cont = cont.BeforeLast(']');
-      analize_section(cont, line);
-    }
-    else
-    {
-      if( inno_part == FILES)
-      {
-        CFiles file;
-				file.Analize(content, line);
-				m_Files.push_back(file);
-      }
-    }
-  }
-  else if( !content.empty())
-  {
-  	if( inno_part == FILES)
-		{
-			CFiles comment;
-			comment.SetLinenumber(line);
-			comment.SetComment(content);
-			m_Files.push_back(comment);
-		}
-  }
-}
-
-void InnoEditor::analize_preprocessor(const wxString& content)
-{
-	wxString con;
-	if( content.StartsWith(_T("include"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("define"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("undef"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("file"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("emit"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("expr"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("insert"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("append"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("for"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("pragma"), &con))
-	{
-	}
-	else if( content.StartsWith(_T("error"), &con))
-	{
-	}
-}
-
-void InnoEditor::analize_section(const wxString& content, const wxString& line)
-{
-	if( content.CmpNoCase(_T("setup")) == 0)
-		inno_part = SETUP;
-	else if( content.CmpNoCase(_T("types")) == 0)
-		inno_part = TYPES;
-	else if( content.CmpNoCase(_T("components")) == 0)
-		inno_part = COMPONENTS;
-	else if( content.CmpNoCase(_T("tasks")) == 0)
-		inno_part = TASKS;
-	else if( content.CmpNoCase(_T("dirs")) == 0)
-		inno_part = FOLDERS;
-	else if( content.CmpNoCase(_T("files")) == 0)
-		inno_part = FILES;
-	else if( content.CmpNoCase(_T("icons")) == 0)
-		inno_part = ICONS;
-	else if( content.CmpNoCase(_T("ini")) == 0)
-		inno_part = INI;
-	else if( content.CmpNoCase(_T("installdelete")) == 0)
-		inno_part = INSTALLDEL;
-	else if( content.CmpNoCase(_T("languages")) == 0)
-		inno_part = LANGUAGES;
-	else if( content.CmpNoCase(_T("messages")) == 0)
-		inno_part = MESSAGES;
-	else if( content.CmpNoCase(_T("custommessages")) == 0)
-		inno_part = CMESSAGES;
-	else if( content.CmpNoCase(_T("langoptions")) == 0)
-		inno_part = LANGOPT;
-	else if( content.CmpNoCase(_T("registry")) == 0)
-		inno_part = REGISTRY;
-	else if( content.CmpNoCase(_T("run")) == 0)
-		inno_part = RUN;
-	else if( content.CmpNoCase(_T("uninstalldelete")) == 0)
-		inno_part = UNINSTALLDEL;
-	else if( content.CmpNoCase(_T("uninstallrun")) == 0)
-		inno_part = UNINSTALL;
-	else if( content.CmpNoCase(_T("code")) == 0)
-		inno_part = PASCALCODE;
-	else
-		inno_part = SCRIPT;
 }
 
 void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
@@ -316,19 +186,17 @@ void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 			GetLeftSplitViewControl()->Show(true);
 			GetLeftSplitViewControl()->SetFocus();
 			GetLeftSplitViewControl()->SetSCIFocus(true);
-			Reload();
+      //GetLeftSplitViewControl()->SetText(m_content);
 			Activate();
-			GotoLine(m_line);
 			Layout();
 		}
 	}
 	else
 	{
-		ListCtrl1->ClearAll();
 
 		if( inno_part == SCRIPT)
 		{
-			m_line = GetLeftSplitViewControl()->GetCurrentLine();
+		  m_content = GetLeftSplitViewControl()->GetText();
 			GetLeftSplitViewControl()->Show(false);
 			Panel1->Show(true);
 			Layout();
@@ -337,11 +205,6 @@ void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 		if( activated.compare(_T("Files")) == 0)
 		{
 			inno_part = FILES;
-			CFiles::AddHeader(ListCtrl1);
-			for( CFiles file : m_Files)
-			{
-				file.AddContent(ListCtrl1);
-			}
 		}
 		else if( activated.compare(_T("Folders")) == 0)
 		{
@@ -389,7 +252,7 @@ void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 		}
 		else if( activated.compare(_T("Install Run")) == 0)
 		{
-			inno_part = INSTALL;
+			inno_part = RUN;
 		}
 		else if( activated.compare(_T("Install Delete")) == 0)
 		{
@@ -411,9 +274,152 @@ void InnoEditor::OnTreeCtrl1ItemActivated(wxTreeEvent& event)
 		{
 			inno_part = POST;
 		}
+		UpdateView();
 	}
 }
 
 void InnoEditor::OnbuildClick(wxCommandEvent& event)
 {
+	ConfigManager* pCfg = Manager::Get()->GetConfigManager(_T("inno"));
+  wxString path = pCfg->Read(_T("iscc_path"), _T(""));
+  if( path.empty())
+  {
+    Manager::Get()->GetLogManager()->Log(L"please set the path to the inno compiler first!\nSettings->Environment...->Inno");
+    return;
+  }
+
+  path = L"\"" + path + L"\"";
+
+  wxString command = path + L" \"";
+
+  command += m_file;
+  command += L"\"";
+
+  m_running = true;
+  wxProcess* compile = new wxProcess(this, ID_EDITOR_THREAD);
+  compile->Redirect();
+  wxExecute(command, wxEXEC_ASYNC, compile);
+  if( !compile)
+  {
+    cbMessageBox(L"can't open a process to the iscc");
+    return;
+  }
+
+  m_out = compile->GetInputStream();
+  m_err = compile->GetErrorStream();
+  if( !m_out || !m_err)
+  {
+    cbMessageBox(L"can't read from stdout of iscc");
+    return;
+  }
+
+  CodeBlocksLogEvent evt(cbEVT_SWITCH_TO_LOG_WINDOW, m_log_pos);
+  Manager::Get()->ProcessEvent(evt);
+
+  if( m_consume == nullptr)
+  {
+    m_consume = new Consume(m_out, m_log_pos);
+    wxThreadError er = m_consume->Run();
+    if( er != wxTHREAD_NO_ERROR)
+    {
+      Manager::Get()->GetLogManager()->Log(wxString::Format(L"Can't create the thread!%d", er), m_log_pos);
+      delete m_consume;
+      m_consume = nullptr;
+    }
+  }
 }
+
+void InnoEditor::UpdateView()
+{
+	if( inno_part != SCRIPT)
+	{
+		ListCtrl1->ClearAll();
+		m_script.Show(ListCtrl1, inno_part);
+	}
+}
+
+bool InnoEditor::Save()
+{
+	bool save = cbEditor::Save();
+
+	if( !GetModified())
+	{
+
+		m_script.Write(m_file);
+
+		save = true;
+	}
+
+	m_script.Read(m_file);
+	UpdateView();
+	return save;
+}
+
+void InnoEditor::OnProcessEnd(cb_unused wxProcessEvent& evt)
+{
+  if( m_running)
+  {
+    m_running = false;
+
+    if(m_consume != nullptr)
+    {
+      if( m_consume->IsRunning())
+        if( m_consume->Delete() != wxTHREAD_NO_ERROR)
+          Manager::Get()->GetLogManager()->Log(L"Error at deleting", m_log_pos);
+    }
+    m_consume = nullptr;
+
+    CodeBlocksLogEvent event(cbEVT_SWITCH_TO_LOG_WINDOW, m_log_pos);
+    Manager::Get()->ProcessEvent(event);
+    wxString text;
+    while( m_out->CanRead())
+    {
+      text += m_out->GetC();
+    }
+    Manager::Get()->GetLogManager()->Log(text, m_log_pos);
+    wxString err;
+    while( m_err->CanRead())
+    {
+      err += m_err->GetC();
+    }
+    if( !err.empty())
+    {
+
+      size_t pos = err.find(L": ");
+      size_t spos = err.find(L"in ");
+      wxString file = err.substr(spos+3, pos-spos-3);
+      wxString msg = err.substr(pos+2, err.find(L"Compile aborted.")-pos-2);
+      spos = err.find(L"on line");
+      int linenr = -1;
+      if( spos != wxString::npos)
+      {
+        wxString line = err.substr(spos+8, err.find(' ', spos+8)-spos-8);
+        linenr = wxAtoi(line);
+      }
+
+      pos = msg.find('[');
+      if( pos != wxString::npos)
+      {
+        pos++;
+        wxString section = msg.substr(pos, msg.find(']') - pos);
+      }
+
+
+      cbEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
+      ed->Reload();
+      ed->Activate();
+      if( linenr != -1)
+      {
+        ed->GotoLine(linenr-1);
+        ed->SetErrorLine(linenr-1);
+      }
+      Manager::Get()->GetLogManager()->Log(err, m_log_pos, Logger::error);
+
+    }
+    else
+    {
+      Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor()->Activate();
+    }
+  }
+}
+

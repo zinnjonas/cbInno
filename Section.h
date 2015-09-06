@@ -22,9 +22,9 @@ class CSection
 
     int GetIndex();
 
-    void AddContent(wxListCtrl* liste);
+    void InsertContent(wxListCtrl* liste);
 
-    static void AddHeader(wxListCtrl* liste);
+    static void InsertHeader(wxListCtrl* liste);
 
   protected:
   private:

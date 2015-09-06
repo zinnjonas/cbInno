@@ -9,6 +9,7 @@
 //*)
 
 #include <prep.h>
+#include <string>
 
 #include "Images/LinksOben.xpm"
 
